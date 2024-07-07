@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\tansa\source\repos\Lithicsoft Trainer\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Create.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ImageClassification.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Python.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Startup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="TextClassification.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
