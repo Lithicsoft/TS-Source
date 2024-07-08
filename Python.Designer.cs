@@ -30,6 +30,8 @@
         {
             label1 = new Label();
             tabPage5 = new TabPage();
+            button6 = new Button();
+            textBox4 = new TextBox();
             label7 = new Label();
             button5 = new Button();
             textBox2 = new TextBox();
@@ -70,6 +72,8 @@
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(button6);
+            tabPage5.Controls.Add(textBox4);
             tabPage5.Controls.Add(label7);
             tabPage5.Controls.Add(button5);
             tabPage5.Controls.Add(textBox2);
@@ -80,6 +84,25 @@
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Result";
             tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            button6.Enabled = false;
+            button6.Location = new Point(423, 62);
+            button6.Name = "button6";
+            button6.Size = new Size(75, 23);
+            button6.TabIndex = 6;
+            button6.Text = "Predict";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
+            // textBox4
+            // 
+            textBox4.Enabled = false;
+            textBox4.Location = new Point(3, 62);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(414, 23);
+            textBox4.TabIndex = 5;
             // 
             // label7
             // 
@@ -327,5 +350,7 @@
         private Button button4;
         private TextBox textBox3;
         private ListView listView1;
+        private Button button6;
+        private TextBox textBox4;
     }
 }

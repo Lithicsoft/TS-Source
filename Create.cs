@@ -137,14 +137,22 @@ namespace Lithicsoft_Trainer
             }
             await UpdateProgressBarAsync(35);
 
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = $"projects\\{textBox1.Text}\\python\\Scripts\\python.exe";
-            start.Arguments = "-m pip install python-dotenv " + string.Join(" ", packageRequirements);
-            start.UseShellExecute = true;
-            start.RedirectStandardOutput = false;
+            try
+            {
+                ProcessStartInfo start = new ProcessStartInfo();
+                start.FileName = $"projects\\{textBox1.Text}\\python\\Scripts\\python.exe";
+                start.Arguments = "-m pip install python-dotenv " + string.Join(" ", packageRequirements);
+                start.UseShellExecute = true;
+                start.RedirectStandardOutput = false;
 
-            await UpdateProgressBarAsync(40);
-            Process process = Process.Start(start);
+                await UpdateProgressBarAsync(40);
+                Process process = Process.Start(start);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error installing python packages: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(1);
+            }
 
             await UpdateProgressBarAsync(50);
         }
@@ -157,6 +165,7 @@ namespace Lithicsoft_Trainer
                 {
                     var baseUri = "https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/rnn_text_generation/";
                     await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
+                    await client.DownloadFileTaskAsync(new Uri(baseUri + "tester.py"), $"projects\\{projectPath}\\tester.py");
                     await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
                     await UpdateProgressBarAsync(20);
                 }
@@ -176,6 +185,7 @@ namespace Lithicsoft_Trainer
                 {
                     var baseUri = "https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/lstm_text_generation/";
                     await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
+                    await client.DownloadFileTaskAsync(new Uri(baseUri + "tester.py"), $"projects\\{projectPath}\\tester.py");
                     await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
                     await UpdateProgressBarAsync(20);
                 }

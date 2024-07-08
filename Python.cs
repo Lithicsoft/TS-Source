@@ -32,6 +32,13 @@ namespace Lithicsoft_Trainer
 
             textBox2.Text = $"projects\\{projectName}";
 
+            if (File.Exists($"projects\\{projectName}\\tester.py"))
+            {
+                label7.Text = "Test model";
+                button6.Enabled = true;
+                textBox4.Enabled = true;
+            }
+
             trainParameters = DotEnv.Load($"projects\\{projectName}\\.env");
             listView1.View = View.Details;
             listView1.Columns.Add("Variable", -2, HorizontalAlignment.Left);
@@ -162,25 +169,19 @@ namespace Lithicsoft_Trainer
             button3.Enabled = true;
         }
 
-        private void InitModel()
-        {
-            try
-            {
-                // working
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading model: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void button6_Click(object sender, EventArgs e)
         {
             try
             {
-                InitModel();
+                File.WriteAllText($"projects\\{projectName}\\prompt.txt", textBox4.Text);
 
-                //working
+                ProcessStartInfo start = new ProcessStartInfo();
+                start.FileName = $"projects\\{projectName}\\python\\Scripts\\python.exe";
+                start.Arguments = $"projects{projectName}\\tester.py";
+                start.UseShellExecute = true;
+                start.RedirectStandardOutput = false;
+
+                Process process = Process.Start(start);
             }
             catch (Exception ex)
             {
