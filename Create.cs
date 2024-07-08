@@ -46,7 +46,7 @@ namespace Lithicsoft_Trainer
 
                     try
                     {
-                        PythonSetup();
+                        await PythonSetup();
                     }
                     catch (Exception ex)
                     {
@@ -67,7 +67,7 @@ namespace Lithicsoft_Trainer
             }
         }
 
-        private async void PythonSetup()
+        private async Task PythonSetup()
         {
             await InstallPackageDependencies(comboBox2.Text);
         }
@@ -132,21 +132,13 @@ namespace Lithicsoft_Trainer
             await UpdateProgressBarAsync(35);
 
             ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = $"projects\\{textBox1.Text}\\python\\Scripts\\pip.exe";
-            start.Arguments = "install " + string.Join(" ", packageRequirements);
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
+            start.FileName = $"projects\\{textBox1.Text}\\python\\Scripts\\python.exe";
+            start.Arguments = "-m pip install python-dotenv " + string.Join(" ", packageRequirements);
+            start.UseShellExecute = true;
+            start.RedirectStandardOutput = false;
 
             await UpdateProgressBarAsync(40);
-
-            using (Process process = Process.Start(start))
-            {
-                using (StreamReader reader = process.StandardOutput)
-                {
-                    string result = reader.ReadToEnd();
-                    Console.Write(result);
-                }
-            }
+            Process process = Process.Start(start);
 
             await UpdateProgressBarAsync(50);
         }

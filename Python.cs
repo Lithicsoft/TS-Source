@@ -101,46 +101,60 @@ namespace Lithicsoft_Trainer
             }
             else
             {
-                richTextBox1.AppendText(text);
+                richTextBox2.AppendText(text);
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private async void button3_Click(object sender, EventArgs e)
         {
             button3.Enabled = false;
             try
             {
                 progressBar2.Value = 0;
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = $"projects\\{projectName}\\python\\Scripts\\python.exe";
-                start.Arguments = $"projects\\{projectName}\\trainer.py";
-                start.UseShellExecute = false;
-                start.RedirectStandardOutput = true;
-                start.RedirectStandardError = true;
-                start.CreateNoWindow = true;
-                progressBar2.Value = 30;
-                Process process = new Process();
-                process.StartInfo = start;
-                process.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
-                {
-                    if (!string.IsNullOrEmpty(e.Data))
-                    {
-                        AppendText(e.Data + Environment.NewLine);
-                    }
-                });
-                process.ErrorDataReceived += new DataReceivedEventHandler((sender, e) =>
-                {
-                    if (!string.IsNullOrEmpty(e.Data))
-                    {
-                        AppendText("ERROR: " + e.Data + Environment.NewLine);
-                    }
-                });
 
-                process.Start();
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-                process.WaitForExit();
-                progressBar2.Value = 100;
+                ProcessStartInfo start = new ProcessStartInfo
+                {
+                    FileName = $"projects\\{projectName}\\python\\Scripts\\python.exe",
+                    Arguments = $"projects\\{projectName}\\trainer.py",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                };
+
+                progressBar2.Value = 30;
+
+                using (Process process = new Process())
+                {
+                    process.StartInfo = start;
+
+                    process.OutputDataReceived += (sender, e) =>
+                    {
+                        if (!string.IsNullOrEmpty(e.Data))
+                        {
+                            this.Invoke((Action)(() => AppendText(e.Data + Environment.NewLine)));
+                        }
+                    };
+
+                    process.ErrorDataReceived += (sender, e) =>
+                    {
+                        if (!string.IsNullOrEmpty(e.Data))
+                        {
+                            this.Invoke((Action)(() => AppendText("ERROR: " + e.Data + Environment.NewLine)));
+                        }
+                    };
+
+                    await Task.Run(() =>
+                    {
+                        process.Start();
+                        process.BeginOutputReadLine();
+                        process.BeginErrorReadLine();
+                        process.WaitForExit();
+                    });
+
+                    progressBar2.Value = 100;
+                }
+
             }
             catch (Exception ex)
             {
