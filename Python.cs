@@ -30,10 +30,7 @@ namespace Lithicsoft_Trainer
             projectName = name;
             label1.Text = $"{type} with {language}";
 
-            if (Directory.Exists($"projects\\{projectName}\\model"))
-            {
-                textBox2.Text = $"projects\\{projectName}\\model";
-            }
+            textBox2.Text = $"projects\\{projectName}";
 
             trainParameters = DotEnv.Load($"projects\\{projectName}\\.env");
             listView1.View = View.Details;
@@ -160,6 +157,8 @@ namespace Lithicsoft_Trainer
             {
                 MessageBox.Show($"Error training model: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            textBox2.Text = $"projects\\{projectName}";
             button3.Enabled = true;
         }
 
@@ -227,18 +226,6 @@ namespace Lithicsoft_Trainer
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening model: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-            if (textBox4.Text.Length > 0)
-            {
-                button6.Enabled = true;
-            }
-            else
-            {
-                button6.Enabled = false;
             }
         }
 

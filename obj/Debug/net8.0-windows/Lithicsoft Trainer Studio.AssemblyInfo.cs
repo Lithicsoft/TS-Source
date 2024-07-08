@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Lithicsoft Trainer Studio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b53c44cdd402e0cd2955ebed05599f3988fc34e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8562805c7a99d4a44f355d67b61eabb6a223c099")]
 [assembly: System.Reflection.AssemblyProductAttribute("Lithicsoft Trainer Studio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Lithicsoft Trainer Studio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

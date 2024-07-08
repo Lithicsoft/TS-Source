@@ -30,9 +30,6 @@
         {
             label1 = new Label();
             tabPage5 = new TabPage();
-            richTextBox3 = new RichTextBox();
-            textBox4 = new TextBox();
-            button6 = new Button();
             label7 = new Label();
             button5 = new Button();
             textBox2 = new TextBox();
@@ -73,9 +70,6 @@
             // 
             // tabPage5
             // 
-            tabPage5.Controls.Add(richTextBox3);
-            tabPage5.Controls.Add(textBox4);
-            tabPage5.Controls.Add(button6);
             tabPage5.Controls.Add(label7);
             tabPage5.Controls.Add(button5);
             tabPage5.Controls.Add(textBox2);
@@ -87,42 +81,14 @@
             tabPage5.Text = "Result";
             tabPage5.UseVisualStyleBackColor = true;
             // 
-            // richTextBox3
-            // 
-            richTextBox3.Location = new Point(3, 93);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.ReadOnly = true;
-            richTextBox3.Size = new Size(495, 239);
-            richTextBox3.TabIndex = 8;
-            richTextBox3.Text = "";
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(3, 64);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(414, 23);
-            textBox4.TabIndex = 7;
-            textBox4.TextChanged += textBox4_TextChanged;
-            // 
-            // button6
-            // 
-            button6.Enabled = false;
-            button6.Location = new Point(423, 64);
-            button6.Name = "button6";
-            button6.Size = new Size(75, 23);
-            button6.TabIndex = 6;
-            button6.Text = "Predict";
-            button6.UseVisualStyleBackColor = true;
-            button6.Click += button6_Click;
-            // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(3, 46);
+            label7.Location = new Point(3, 44);
             label7.Name = "label7";
-            label7.Size = new Size(64, 15);
+            label7.Size = new Size(249, 15);
             label7.TabIndex = 4;
-            label7.Text = "Test model";
+            label7.Text = "Pipeline is not available for this model/project\r\n";
             // 
             // button5
             // 
@@ -149,9 +115,9 @@
             label6.AutoSize = true;
             label6.Location = new Point(3, 0);
             label6.Name = "label6";
-            label6.Size = new Size(60, 15);
+            label6.Size = new Size(73, 15);
             label6.TabIndex = 0;
-            label6.Text = "Model file";
+            label6.Text = "Result folder";
             // 
             // tabPage3
             // 
@@ -353,16 +319,13 @@
         private TabPage tabPage3;
         private Label label6;
         private Button button5;
-        private Button button6;
         private Label label7;
         private ProgressBar progressBar2;
         private TextBox textBox2;
-        private TextBox textBox4;
         private RichTextBox richTextBox2;
         private TabPage tabPage2;
         private Button button4;
         private TextBox textBox3;
         private ListView listView1;
-        private RichTextBox richTextBox3;
     }
 }

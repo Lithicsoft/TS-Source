@@ -116,17 +116,23 @@ namespace Lithicsoft_Trainer
             switch (language)
             {
                 case "Python (Tensorflow)":
-                    packageRequirements.Add(CheckForDiscreteGPU() ? "tensorflow" : "tensorflow");
+                    packageRequirements.Add(CheckForDiscreteGPU() ? "tensorflow-gpu" : "tensorflow");
 
                     if (comboBox1.Text == "Text generation (RNN)")
                     {
                         packageRequirements.Add("numpy");
-                        await DownloadFilesForRNN(textBox1.Text);
+                        await DownloadFilesForTGRNN(textBox1.Text);
                     }
                     break;
 
                 case "Python (PyTorch)":
                     packageRequirements.Add("torch");
+
+                    if (textBox1.Text == "Text generation (LSTM)")
+                    {
+                        packageRequirements.Add("numpy");
+                        await DownloadFilesForTGLSTM(textBox1.Text);
+                    }
                     break;
             }
             await UpdateProgressBarAsync(35);
@@ -143,13 +149,32 @@ namespace Lithicsoft_Trainer
             await UpdateProgressBarAsync(50);
         }
 
-        private async Task DownloadFilesForRNN(string projectPath)
+        private async Task DownloadFilesForTGRNN(string projectPath)
         {
             using (var client = new WebClient())
             {
                 try
                 {
                     var baseUri = "https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/rnn_text_generation/";
+                    await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
+                    await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
+                    await UpdateProgressBarAsync(20);
+                }
+                catch (WebException ex)
+                {
+                    MessageBox.Show($"Error downloading file: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Environment.Exit(1);
+                }
+            }
+        }
+
+        private async Task DownloadFilesForTGLSTM(string projectPath)
+        {
+            using (var client = new WebClient())
+            {
+                try
+                {
+                    var baseUri = "https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/lstm_text_generation/";
                     await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
                     await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
                     await UpdateProgressBarAsync(20);
@@ -196,7 +221,7 @@ namespace Lithicsoft_Trainer
             }
             else if (comboBox2.Text == "Python (PyTorch)")
             {
-                comboBox1.Items.AddRange(["Text generation"]);
+                comboBox1.Items.AddRange(["Text generation (LSTM)"]);
             }
             else if (comboBox2.Text == "Python (Tensorflow)")
             {
