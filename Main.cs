@@ -6,6 +6,8 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
+using System.ComponentModel;
+
 namespace Lithicsoft_Trainer
 {
     public partial class Main : Form
@@ -15,6 +17,8 @@ namespace Lithicsoft_Trainer
             try
             {
                 InitializeComponent();
+
+                this.Closing += OnClosing;
 
                 try
                 {
@@ -60,6 +64,18 @@ namespace Lithicsoft_Trainer
                 MessageBox.Show($"Error opening project: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
+        }
+
+        private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            string msg = "Do you want to exit Trainer Studio?";
+            DialogResult result = MessageBox.Show(msg, "Close Confirmation",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+                Application.Exit();
+            else if (result == DialogResult.No)
+                cancelEventArgs.Cancel = false;
+
         }
     }
 }

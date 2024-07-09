@@ -7,6 +7,7 @@
  */
 
 using Microsoft.ML.Runtime;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Management;
@@ -24,6 +25,7 @@ namespace Lithicsoft_Trainer
         private async void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
+            this.Closing += OnClosing;
             try
             {
                 Directory.CreateDirectory($"projects\\{textBox1.Text}");
@@ -241,6 +243,18 @@ namespace Lithicsoft_Trainer
                     progressBar1.Value = value;
                 }
             });
+        }
+
+        private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            string msg = "Do you want to exit Trainer Studio?";
+            DialogResult result = MessageBox.Show(msg, "Close Confirmation",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+                Application.Exit();
+            else if (result == DialogResult.No)
+                cancelEventArgs.Cancel = false;
+
         }
     }
 }
