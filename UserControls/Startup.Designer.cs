@@ -80,7 +80,7 @@
             label3.Name = "label3";
             label3.Size = new Size(85, 15);
             label3.TabIndex = 2;
-            label3.Text = "Build 20240703";
+            label3.Text = "Build 20240709";
             // 
             // label2
             // 

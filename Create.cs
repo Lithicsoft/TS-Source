@@ -6,6 +6,7 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
+using Microsoft.ML.Runtime;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Management;
@@ -121,7 +122,6 @@ namespace Lithicsoft_Trainer
                     if (comboBox1.Text == "Text generation (RNN)")
                     {
                         packageRequirements.Add("numpy");
-                        await DownloadKitFiles(textBox1.Text, comboBox1.Text);
                     }
                     break;
 
@@ -131,10 +131,12 @@ namespace Lithicsoft_Trainer
                     if (textBox1.Text == "Text generation (LSTM)")
                     {
                         packageRequirements.Add("numpy");
-                        await DownloadKitFiles(textBox1.Text, comboBox1.Text);
+                        
                     }
                     break;
             }
+
+            await DownloadKitFiles(textBox1.Text, comboBox1.Text);
             await UpdateProgressBarAsync(35);
 
             try
