@@ -128,10 +128,9 @@ namespace Lithicsoft_Trainer
                 case "Python (PyTorch)":
                     packageRequirements.Add("torch");
 
-                    if (textBox1.Text == "Text generation (LSTM)")
+                    if (comboBox1.Text == "Text generation (LSTM)")
                     {
                         packageRequirements.Add("numpy");
-                        
                     }
                     break;
             }

@@ -115,7 +115,6 @@
             // 
             // button5
             // 
-            button5.Enabled = false;
             button5.Location = new Point(423, 18);
             button5.Name = "button5";
             button5.Size = new Size(75, 23);
