@@ -121,7 +121,7 @@ namespace Lithicsoft_Trainer
                     if (comboBox1.Text == "Text generation (RNN)")
                     {
                         packageRequirements.Add("numpy");
-                        await DownloadFilesForTGRNN(textBox1.Text);
+                        await DownloadKitFiles(textBox1.Text, comboBox1.Text);
                     }
                     break;
 
@@ -131,7 +131,7 @@ namespace Lithicsoft_Trainer
                     if (textBox1.Text == "Text generation (LSTM)")
                     {
                         packageRequirements.Add("numpy");
-                        await DownloadFilesForTGLSTM(textBox1.Text);
+                        await DownloadKitFiles(textBox1.Text, comboBox1.Text);
                     }
                     break;
             }
@@ -157,43 +157,31 @@ namespace Lithicsoft_Trainer
             await UpdateProgressBarAsync(50);
         }
 
-        private async Task DownloadFilesForTGRNN(string projectPath)
+        private async Task DownloadKitFiles(string projectPath, string projectType)
         {
-            using (var client = new WebClient())
+            Dictionary<string, string> pythonTrainerKit = new Dictionary<string, string>
             {
-                try
+                {"Text generation (RNN)", "rnn_text_generation"},
+                {"Text generation (LSTM)", "lstm_text_generation"}
+            };
+
+            try
+            {
+                using (var client = new WebClient())
                 {
-                    var baseUri = "https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/rnn_text_generation/";
+
+                    var baseUri = $"https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/{pythonTrainerKit[projectType]}/";
                     await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
                     await client.DownloadFileTaskAsync(new Uri(baseUri + "tester.py"), $"projects\\{projectPath}\\tester.py");
                     await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
                     await UpdateProgressBarAsync(20);
-                }
-                catch (WebException ex)
-                {
-                    MessageBox.Show($"Error downloading file: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Environment.Exit(1);
+
                 }
             }
-        }
-
-        private async Task DownloadFilesForTGLSTM(string projectPath)
-        {
-            using (var client = new WebClient())
+            catch (WebException ex)
             {
-                try
-                {
-                    var baseUri = "https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/lstm_text_generation/";
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + "tester.py"), $"projects\\{projectPath}\\tester.py");
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
-                    await UpdateProgressBarAsync(20);
-                }
-                catch (WebException ex)
-                {
-                    MessageBox.Show($"Error downloading file: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Environment.Exit(1);
-                }
+                MessageBox.Show($"Error downloading file: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(1);
             }
         }
 

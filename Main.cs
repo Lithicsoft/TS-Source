@@ -58,7 +58,7 @@ namespace Lithicsoft_Trainer
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening project: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
+
             }
         }
     }
