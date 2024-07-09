@@ -253,8 +253,7 @@ namespace Lithicsoft_Trainer
             if (result == DialogResult.Yes)
                 Application.Exit();
             else if (result == DialogResult.No)
-                cancelEventArgs.Cancel = false;
-
+                cancelEventArgs.Cancel = true;
         }
     }
 }
