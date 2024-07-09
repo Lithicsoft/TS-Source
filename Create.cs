@@ -128,6 +128,7 @@ namespace Lithicsoft_Trainer
                     break;
 
                 case "Python (PyTorch)":
+                    CheckForDiscreteGPU();
                     packageRequirements.Add("torch");
 
                     if (comboBox1.Text == "Text generation (LSTM)")
