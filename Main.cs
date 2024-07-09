@@ -12,45 +12,53 @@ namespace Lithicsoft_Trainer
     {
         public Main(string projectName, string projectLanguage, string ProjectType)
         {
-            InitializeComponent();
-
             try
             {
-                if (projectLanguage == "C#")
+                InitializeComponent();
+
+                try
                 {
-                    if (ProjectType == "Image classification")
+                    if (projectLanguage == "C#")
                     {
-                        ImageClassification imageClassification = new ImageClassification(projectName);
-                        this.Controls.Add(imageClassification);
+                        if (ProjectType == "Image classification")
+                        {
+                            ImageClassification imageClassification = new ImageClassification(projectName);
+                            this.Controls.Add(imageClassification);
 
-                        this.AutoSize = true;
-                        this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-                    }
-                    else if (ProjectType == "Text classification")
-                    {
-                        TextClassification textClassification = new TextClassification(projectName);
-                        this.Controls.Add(textClassification);
+                            this.AutoSize = true;
+                            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                        }
+                        else if (ProjectType == "Text classification")
+                        {
+                            TextClassification textClassification = new TextClassification(projectName);
+                            this.Controls.Add(textClassification);
 
-                        this.AutoSize = true;
-                        this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                            this.AutoSize = true;
+                            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Cannot open project {projectName} ({ProjectType})", "Project Open");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show($"Cannot open project {projectName} ({ProjectType})", "Project Open");
+                        Python python = new Python(projectName, projectLanguage, ProjectType);
+                        this.Controls.Add(python);
+
+                        this.AutoSize = true;
+                        this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Python python = new Python(projectName, projectLanguage, ProjectType);
-                    this.Controls.Add(python);
-
-                    this.AutoSize = true;
-                    this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                    MessageBox.Show($"Error dectecting project type: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error dectecting project type: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error opening project: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
             }
         }
     }
