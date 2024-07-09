@@ -35,7 +35,7 @@ namespace Lithicsoft_Trainer
                     Directory.CreateDirectory($"projects\\{textBox1.Text}\\python");
                     try
                     {
-                        ZipFile.ExtractToDirectory("Python.zip", $"projects\\{textBox1.Text}");
+                        ZipFile.ExtractToDirectory("Python.zip", $"projects\\{textBox1.Text}", overwriteFiles: true);
                     }
                     catch (InvalidDataException ex)
                     {
