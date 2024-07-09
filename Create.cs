@@ -75,7 +75,7 @@ namespace Lithicsoft_Trainer
             await InstallPackageDependencies(comboBox2.Text);
         }
 
-        bool CheckForDiscreteGPU()
+        private void CheckForDiscreteGPU()
         {
             try
             {
@@ -94,7 +94,6 @@ namespace Lithicsoft_Trainer
                     {
                         discreteGPUFound = true;
                         string gpuName = mo["Name"]?.ToString();
-                        return true;
                     }
                 }
 
@@ -108,7 +107,6 @@ namespace Lithicsoft_Trainer
                 MessageBox.Show($"Error checking gpu: {ex.Message}", "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            return false;
         }
 
 
@@ -116,10 +114,11 @@ namespace Lithicsoft_Trainer
         {
             var packageRequirements = new List<string>();
 
+            CheckForDiscreteGPU();
             switch (language)
             {
                 case "Python (Tensorflow)":
-                    packageRequirements.Add(CheckForDiscreteGPU() ? "tensorflow-gpu" : "tensorflow");
+                    packageRequirements.Add("tensorflow");
 
                     if (comboBox1.Text == "Text generation (RNN)")
                     {
@@ -128,7 +127,6 @@ namespace Lithicsoft_Trainer
                     break;
 
                 case "Python (PyTorch)":
-                    CheckForDiscreteGPU();
                     packageRequirements.Add("torch");
 
                     if (comboBox1.Text == "Text generation (LSTM)")
