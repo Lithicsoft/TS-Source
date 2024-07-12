@@ -1,0 +1,29 @@
+﻿<Page x:Class="Lithicsoft_Trainer_Studio.Python.PY.ConfigModel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.Python.PY"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="655"
+      Title="ConfigModel" Loaded="Page_Loaded">
+
+    <Grid>
+        <ListView Name="listView1" IsSynchronizedWithCurrentItem="True" Margin="0,0,0,35">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Variable" Width="120" DisplayMemberBinding="{Binding Variable}" />
+                    <GridViewColumn Header="Value" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Save change" HorizontalAlignment="Center" Margin="0,415,0,0" VerticalAlignment="Top" BorderBrush="#FF0078D7" Foreground="#FF0078D7" Background="#FFF4F4F4" Height="35" Width="655" Click="Button_Click"/>
+
+    </Grid>
+</Page>

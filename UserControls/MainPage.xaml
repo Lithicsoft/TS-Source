@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Lithicsoft_Trainer_Studio.UserControls.MainPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="MainPage_Loaded">
+    <Grid>
+        <Frame x:Name="Main" Margin="0,0,150,0" NavigationUIVisibility="Hidden"/>
+        <StackPanel Margin="650,0,0,0">
+            <Button x:Name="button1" Content="Create new project" Margin="0, 36, 0, 0" Width="130" Foreground="#FF0078D7" Click="button1_Click" Background="#FFF4F4F4" BorderBrush="#FF0078D7"/>
+            <Button Content="Import project" Margin="0, 10, 0, 0" Width="130" Foreground="#FF0078D7" Background="#FFF4F4F4" BorderBrush="#FF0078D7"/>
+            <Button Content="About" Margin="0, 10, 0, 0" Width="130" Foreground="#FF0078D7" Background="#FFF4F4F4" BorderBrush="#FF0078D7"/>
+            <Button x:Name="button4" Content="Back" Margin="0, 300, 0, 0" Width="130" Foreground="#FF0078D7" IsEnabled="False" BorderBrush="#FF0078D7" Click="button4_Click"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

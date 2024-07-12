@@ -1,32 +1,100 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <_LastSelectedProfileId>C:\Users\tansa\source\repos\Lithicsoft Trainer\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
-    <Compile Update="Create.cs">
-      <SubType>Form</SubType>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CSharp\IC\ModelResult.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CSharp\ImageClassification.cs">
-      <SubType>UserControl</SubType>
+    <Compile Update="CSharp\IC\ModelTester.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CSharp\TextClassification.cs">
-      <SubType>UserControl</SubType>
+    <Compile Update="CSharp\IC\TrainModel.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Form1.cs">
-      <SubType>Form</SubType>
+    <Compile Update="CSharp\ImageClassification.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Main.cs">
-      <SubType>Form</SubType>
+    <Compile Update="CSharp\IC\DataPreparation.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Python\Python.cs">
-      <SubType>UserControl</SubType>
+    <Compile Update="Python\PY\ConfigModel.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\Manager.cs">
-      <SubType>UserControl</SubType>
+    <Compile Update="Trainer.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\Startup.cs">
-      <SubType>UserControl</SubType>
+    <Compile Update="UserControls\MainPage.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControls\Pages\Creator.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\Pages\Manager.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\Startup.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="CSharp\IC\ModelResult.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CSharp\IC\ModelTester.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CSharp\IC\TrainModel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CSharp\ValuePrediction.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CSharp\ImageClassification.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CSharp\IC\DataPreparation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Python\PY\ConfigModel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Python\PY\DataPreparation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Python\PY\ModelResult.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Python\PY\ModelTester.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Python\PY\TrainModel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Python\Python.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Trainer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\Pages\Creator.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\Pages\Manager.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\Startup.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

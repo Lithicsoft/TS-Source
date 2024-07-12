@@ -1,0 +1,172 @@
+﻿// License: Apache-2.0
+/*
+ * UserControls/Startup.xaml.cs: Back-end source code for launcher
+ *
+ * (C) Copyright 2024 Lithicsoft Organization
+ * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
+ */
+
+using System.IO;
+using System.IO.Compression;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace Lithicsoft_Trainer_Studio.UserControls
+{
+    /// <summary>
+    /// Interaction logic for Startup.xaml
+    /// </summary>
+    public partial class Startup : UserControl
+    {
+        public Startup()
+        {
+            InitializeComponent();
+        }
+
+        public event EventHandler UserControlClosed;
+
+        private void Startup_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                StartInitialization();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error starting Trainer Studio: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void StartInitialization()
+        {
+            await InitializeAsync();
+            await Task.Delay(1500);
+            OnUserControlClosed();
+        }
+
+        private async Task InitializeAsync()
+        {
+            CreateProjectsFolder();
+            await CheckAndDownloadFilesAsync();
+        }
+
+        protected virtual void OnUserControlClosed()
+        {
+            UserControlClosed?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void CreateProjectsFolder()
+        {
+            if (!Directory.Exists("projects"))
+            {
+                Directory.CreateDirectory("projects");
+            }
+        }
+
+        private async Task CheckAndDownloadFilesAsync()
+        {
+            try
+            {
+
+                if (!Directory.Exists("inception"))
+                {
+                    Directory.CreateDirectory("inception");
+                }
+
+                if (!File.Exists("inception\\tensorflow_inception_graph.pb"))
+                {
+                    string zipFile = "inception\\inception5h.zip";
+
+                    using (var client = new WebClient())
+                    {
+                        try
+                        {
+                            await client.DownloadFileTaskAsync(new Uri("https://storage.googleapis.com/download.tensorflow.org/models/inception5h.zip"), zipFile);
+                        }
+                        catch (WebException ex)
+                        {
+                            MessageBox.Show($"Error downloading file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            Environment.Exit(1);
+                        }
+                    }
+
+                    try
+                    {
+                        string extractPath = "inception";
+                        await Task.Run(() => ZipFile.ExtractToDirectory(zipFile, extractPath));
+                    }
+                    catch (InvalidDataException ex)
+                    {
+                        MessageBox.Show($"Error extracting zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Environment.Exit(1);
+                    }
+                }
+
+                if (!File.Exists("sentiment_model\\saved_model.pb"))
+                {
+                    string zipFile = "sentiment_model.zip";
+
+                    using (var client = new WebClient())
+                    {
+                        try
+                        {
+                            await client.DownloadFileTaskAsync(new Uri("https://github.com/dotnet/samples/blob/main/machine-learning/models/textclassificationtf/sentiment_model.zip?raw=true"), zipFile);
+                        }
+                        catch (WebException ex)
+                        {
+                            MessageBox.Show($"Error downloading file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            Environment.Exit(1);
+                        }
+                    }
+
+                    try
+                    {
+                        await Task.Run(() => ZipFile.ExtractToDirectory(zipFile, "."));
+                    }
+                    catch (InvalidDataException ex)
+                    {
+                        MessageBox.Show($"Error extracting zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Environment.Exit(1);
+                    }
+                }
+
+                if (!File.Exists("Python.zip"))
+                {
+                    string zipFile = "Python.zip";
+
+                    using (var client = new WebClient())
+                    {
+                        try
+                        {
+                            await client.DownloadFileTaskAsync(new Uri("https://github.com/Lithicsoft/Lithicsoft-Trainer-Studio/raw/main/Python.zip"), zipFile);
+                        }
+                        catch (WebException ex)
+                        {
+                            MessageBox.Show($"Error downloading file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            Environment.Exit(1);
+                        }
+                    }
+                }
+
+                string[] filesToDelete = {
+                    "inception\\inception5h.zip",
+                    "sentiment_model.zip",
+                };
+
+                foreach (string filePath in filesToDelete)
+                {
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error starting studio: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(1);
+            }
+        }
+    }
+}

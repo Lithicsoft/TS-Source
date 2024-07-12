@@ -1,0 +1,23 @@
+﻿<Page x:Class="Lithicsoft_Trainer_Studio.Python.PY.ModelResult"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.Python.PY"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="665"
+      Title="ModelResult" Loaded="Page_Loaded">
+
+    <Grid>
+        <Button x:Name="button1" Content="Open output folder" HorizontalAlignment="Left" Margin="515,10,0,0" VerticalAlignment="Top" BorderBrush="#FF0078D7" Foreground="#FF0078D7" Background="#FFF4F4F4" Width="140" IsEnabled="False" Click="button1_Click"/>
+        <RichTextBox x:Name="DocCode" Margin="0,41,10,10" MaxHeight="450" MaxWidth="655" IsDocumentEnabled="True">
+            <FlowDocument>
+                <Paragraph>
+                    
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Label Content="How to use your model?" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
+
+    </Grid>
+</Page>

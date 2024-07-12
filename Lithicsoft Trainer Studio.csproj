@@ -3,22 +3,26 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <RootNamespace>Lithicsoft_Trainer</RootNamespace>
+    <RootNamespace>Lithicsoft_Trainer_Studio</RootNamespace>
     <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>Traner-Studio.ico</ApplicationIcon>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Trainer-Studio.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Traner-Studio.ico" />
+    <None Remove="UserControls\Lithicsoft Trainer Studio.png" />
+    <None Remove="UserControls\Trainer Studio.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AForge.Video" Version="2.2.5" />
-    <PackageReference Include="AForge.Video.DirectShow" Version="2.2.5" />
+    <Content Include="Trainer-Studio.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.ML" Version="3.0.1" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="3.0.1" />
     <PackageReference Include="Microsoft.ML.ImageAnalytics" Version="3.0.1" />
     <PackageReference Include="Microsoft.ML.OnnxConverter" Version="0.21.1" />
     <PackageReference Include="Microsoft.ML.TensorFlow" Version="3.0.1" />
@@ -27,20 +31,56 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Python\Python.cs" />
-    <Compile Update="CSharp\TextClassification.cs" />
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
+    <Resource Include="UserControls\Lithicsoft Trainer Studio.png" />
+    <Resource Include="UserControls\Trainer Studio.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CSharp\ValuePrediction.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CSharp\VP\DataPreparation.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CSharp\VP\ModelResult.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CSharp\VP\ModelTester.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CSharp\VP\TrainModel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Python\PY\DataPreparation.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Python\PY\ModelResult.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Python\PY\ModelTester.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Python\PY\TrainModel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Python\Python.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Page Update="CSharp\VP\DataPreparation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CSharp\VP\ModelResult.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CSharp\VP\ModelTester.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CSharp\VP\TrainModel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>
