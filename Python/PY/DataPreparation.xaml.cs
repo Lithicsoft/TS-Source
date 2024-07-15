@@ -67,8 +67,6 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                     Directory.CreateDirectory($"projects\\{projectName}\\datasets");
                     string extractPath = $"projects\\{projectName}\\datasets";
                     ZipFile.ExtractToDirectory(path, extractPath);
-                    CSharpML.ImageClassification imageClassification = new CSharpML.ImageClassification();
-                    imageClassification.DataPrepare($"projects\\{projectName}\\datasets", projectName);
                 }
                 catch (Exception ex)
                 {
