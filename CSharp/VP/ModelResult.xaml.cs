@@ -29,7 +29,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists($"project\\{projectName}\\outputs\\model.zip"))
+            if (File.Exists($"projects\\{projectName}\\outputs\\model.zip"))
             {
                 button1.IsEnabled = true;
             }
