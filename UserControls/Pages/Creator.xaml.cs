@@ -155,7 +155,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             {
                 ProcessStartInfo start = new ProcessStartInfo();
                 start.FileName = $"cmd.exe";
-                start.Arguments = $"/K python -m pip install project\\{textBox1.Text}\\requirements.txt";
+                start.Arguments = $"/K python -m pip install -r \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{textBox1.Text}\\requirements.txt")}\"";
                 start.UseShellExecute = true;
                 start.RedirectStandardOutput = false;
 

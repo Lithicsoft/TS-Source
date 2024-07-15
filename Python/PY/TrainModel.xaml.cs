@@ -62,7 +62,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             {
                 ProcessStartInfo start = new ProcessStartInfo();
                 start.FileName = $"cmd.exe";
-                start.Arguments = $"/K python projects\\{projectName}\\trainer.py";
+                start.Arguments = $"/K python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\trainer.py")}\"";
                 start.UseShellExecute = true;
                 start.RedirectStandardOutput = false;
 
