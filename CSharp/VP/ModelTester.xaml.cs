@@ -59,7 +59,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
 
                 var prediction = predictionEngine.Predict(sampleInput);
 
-                label1.Content = "Predict: " + prediction.ToString();
+                label1.Content = "Predict: " + prediction.Prediction;
             }
             catch (Exception ex)
             {

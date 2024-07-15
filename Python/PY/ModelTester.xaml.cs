@@ -6,14 +6,10 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
-using Microsoft.ML;
-using Microsoft.ML.Data;
-using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace Lithicsoft_Trainer_Studio.Python.PY
 {

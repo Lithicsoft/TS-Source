@@ -66,7 +66,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
 
                     var prediction = predictionEngine.Predict(imageData);
 
-                    label1.Content = "Predict: " + prediction.ToString();
+                    label1.Content = "Predict " + prediction.PredictedLabelValue;
                 }
             }
             catch (Exception ex)

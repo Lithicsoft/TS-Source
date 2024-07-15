@@ -58,14 +58,20 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             button1.IsEnabled = false;
             TrainModel.Instance.isTraining = true;
             label1.Content = "Training your model...";
+            try
+            {
+                ProcessStartInfo start = new ProcessStartInfo();
+                start.FileName = $"projects\\{projectName}\\python\\Scripts\\python.exe";
+                start.Arguments = $"projects{projectName}\\trainer.py";
+                start.UseShellExecute = true;
+                start.RedirectStandardOutput = false;
 
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = $"projects\\{projectName}\\python\\Scripts\\python.exe";
-            start.Arguments = $"projects{projectName}\\trainer.py";
-            start.UseShellExecute = true;
-            start.RedirectStandardOutput = false;
-
-            Process process = Process.Start(start);
+                Process process = Process.Start(start);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error training model: {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             label1.Content = "Done!";
             TrainModel.Instance.isTraining = true;

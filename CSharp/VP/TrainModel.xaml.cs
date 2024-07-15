@@ -41,7 +41,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists($"projects\\{projectName}\\datasets\\dataset.tsv"))
+            if (File.Exists($"projects\\{projectName}\\datasets\\dataset.csv"))
             {
                 label1.Content = "Ready for train your model";
                 button1.IsEnabled = true;
@@ -57,8 +57,15 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             button1.IsEnabled = false;
             TrainModel.Instance.isTraining = true;
             label1.Content = "Training your model...";
-            CSharpML.ValuePrediction valuePrediction = new CSharpML.ValuePrediction();
-            valuePrediction.Train(projectName);
+            try
+            {
+                CSharpML.ValuePrediction valuePrediction = new CSharpML.ValuePrediction();
+                valuePrediction.Train(projectName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error training model {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             label1.Content = "Done!";
             TrainModel.Instance.isTraining = true;
             button1.IsEnabled = true;

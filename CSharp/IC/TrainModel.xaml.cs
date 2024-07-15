@@ -57,8 +57,15 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             button1.IsEnabled = false;
             TrainModel.Instance.isTraining = true;
             label1.Content = "Training your model...";
-            CSharpML.ImageClassification imageClassification = new CSharpML.ImageClassification();
-            imageClassification.Train(projectName);
+            try
+            {
+                CSharpML.ImageClassification imageClassification = new CSharpML.ImageClassification();
+                imageClassification.Train(projectName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error training model {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             label1.Content = "Done!";
             TrainModel.Instance.isTraining = false;
             button1.IsEnabled = true;
