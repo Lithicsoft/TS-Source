@@ -72,6 +72,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             {
                 Directory.CreateDirectory($"projects\\{textBox1.Text}");
                 File.WriteAllLines($"projects\\{textBox1.Text}\\{textBox1.Text}.project", [comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString()]);
+                Directory.CreateDirectory($"projects\\{textBox1.Text}\\outputs");
 
                 if (comboBox1.SelectedItem.ToString() != "CSharp")
                 {
