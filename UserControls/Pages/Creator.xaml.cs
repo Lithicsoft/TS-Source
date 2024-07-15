@@ -76,18 +76,6 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
                 if (comboBox1.SelectedItem.ToString() != "CSharp")
                 {
-
-                    Directory.CreateDirectory($"projects\\{textBox1.Text}\\python");
-                    try
-                    {
-                        ZipFile.ExtractToDirectory("Python.zip", $"projects\\{textBox1.Text}", overwriteFiles: true);
-                    }
-                    catch (InvalidDataException ex)
-                    {
-                        MessageBox.Show($"Error extracting zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        Environment.Exit(1);
-                    }
-
                     try
                     {
                         await PythonSetup();
@@ -166,8 +154,8 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             try
             {
                 ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = $"projects\\{textBox1.Text}\\python\\Scripts\\python.exe";
-                start.Arguments = $"-m pip install project\\{textBox1.Text}\\requirements.txt";
+                start.FileName = $"cmd.exe";
+                start.Arguments = $"/K python -m pip install project\\{textBox1.Text}\\requirements.txt";
                 start.UseShellExecute = true;
                 start.RedirectStandardOutput = false;
 

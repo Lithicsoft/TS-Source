@@ -131,24 +131,6 @@ namespace Lithicsoft_Trainer_Studio.UserControls
                     }
                 }
 
-                if (!File.Exists("Python.zip"))
-                {
-                    string zipFile = "Python.zip";
-
-                    using (var client = new WebClient())
-                    {
-                        try
-                        {
-                            await client.DownloadFileTaskAsync(new Uri("https://github.com/Lithicsoft/Lithicsoft-Trainer-Studio/raw/main/Python.zip"), zipFile);
-                        }
-                        catch (WebException ex)
-                        {
-                            MessageBox.Show($"Error downloading file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            Environment.Exit(1);
-                        }
-                    }
-                }
-
                 string[] filesToDelete = {
                     "inception\\inception5h.zip",
                     "sentiment_model.zip",
