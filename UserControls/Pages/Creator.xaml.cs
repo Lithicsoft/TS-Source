@@ -111,14 +111,14 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             await InstallPackageDependencies(comboBox1.SelectedItem.ToString());
         }
 
-        private void CheckForDiscreteGPU()
+        private bool CheckForDiscreteGPU()
         {
+            bool discreteGPUFound = false;
+
             try
             {
                 ManagementObjectSearcher searcher = new ManagementObjectSearcher("select * from Win32_VideoController");
                 ManagementObjectCollection moc = searcher.Get();
-
-                bool discreteGPUFound = false;
 
                 foreach (ManagementObject mo in moc)
                 {
@@ -143,19 +143,19 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                 MessageBox.Show($"Error checking gpu: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
+            return discreteGPUFound;
+
         }
 
         private async Task InstallPackageDependencies(string language)
         {
-            CheckForDiscreteGPU();
-
-            await DownloadKitFiles(textBox1.Text, comboBox2.SelectedItem.ToString());
+            await DownloadKitFiles(textBox1.Text, comboBox2.SelectedItem.ToString(), CheckForDiscreteGPU());
 
             try
             {
                 ProcessStartInfo start = new ProcessStartInfo();
                 start.FileName = $"cmd.exe";
-                start.Arguments = $"/K python -m pip install -r \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{textBox1.Text}\\requirements.txt")}\"";
+                start.Arguments = $"/K conda create -n \"{textBox1.Text}\" {File.ReadAllText(Path.Combine(Environment.CurrentDirectory, $"projects\\{textBox1.Text}\\requirements.txt"))}";
                 start.UseShellExecute = true;
                 start.RedirectStandardOutput = false;
 
@@ -168,7 +168,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             }
         }
 
-        private async Task DownloadKitFiles(string projectPath, string projectType)
+        private async Task DownloadKitFiles(string projectPath, string projectType, bool usingGPU)
         {
             Dictionary<string, string> pythonTrainerKit = new Dictionary<string, string>
             {
@@ -182,7 +182,14 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                 {
 
                     var baseUri = $"https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/{pythonTrainerKit[projectType]}/";
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements.txt"), $"projects\\{projectPath}\\requirements.txt");
+                    if (usingGPU)
+                    {
+                        await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements-gpu.txt"), $"projects\\{projectPath}\\requirements.txt");
+                    }
+                    else
+                    {
+                        await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements-cpu.txt"), $"projects\\{projectPath}\\requirements.txt");
+                    }
                     await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
                     await client.DownloadFileTaskAsync(new Uri(baseUri + "tester.py"), $"projects\\{projectPath}\\tester.py");
                     await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
