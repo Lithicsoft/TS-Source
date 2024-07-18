@@ -88,6 +88,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 

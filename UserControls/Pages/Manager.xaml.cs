@@ -76,18 +76,17 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     Trainer trainer = new Trainer(projectName, projectLanguage, projectType);
                     trainer.Show();
 
-                    OnPageClosed();
+                    Window parentWindow = Window.GetWindow(this);
+                    if (parentWindow != null)
+                    {
+                        parentWindow.Hide();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening project: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        protected virtual void OnPageClosed()
-        {
-            PageClosed?.Invoke(this, EventArgs.Empty);
         }
     }
 

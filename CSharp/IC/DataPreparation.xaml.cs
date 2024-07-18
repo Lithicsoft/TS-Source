@@ -51,7 +51,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             loadDataset(textBox1.Text);
         }
 
-        private void loadDataset(string path)
+        private async Task loadDataset(string path)
         {
             button1.IsEnabled = false;
             textBox1.IsEnabled = false;
@@ -92,16 +92,18 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                     string extractPath = $"projects\\{projectName}\\datasets";
                     ZipFile.ExtractToDirectory(path, extractPath);
                     CSharpML.ImageClassification imageClassification = new CSharpML.ImageClassification();
-                    imageClassification.DataPrepare($"projects\\{projectName}\\datasets", projectName);
+                    await imageClassification.DataPrepare($"projects\\{projectName}\\datasets", projectName);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
             }
             else
             {
                 MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
             button1.IsEnabled = true;
             textBox1.IsEnabled = true;

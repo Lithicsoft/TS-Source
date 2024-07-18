@@ -70,6 +70,8 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
             try
             {
+                textBox1.Text = textBox1.Text.Replace("\"", "").Replace("&", "").Replace("|", "").Replace(";", "");
+
                 Directory.CreateDirectory($"projects\\{textBox1.Text}");
                 File.WriteAllLines($"projects\\{textBox1.Text}\\{textBox1.Text}.project", [comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString()]);
                 Directory.CreateDirectory($"projects\\{textBox1.Text}\\outputs");
@@ -90,7 +92,11 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                 Trainer trainer = new Trainer(textBox1.Text, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
                 trainer.Show();
 
-                OnPageClosed();
+                Window parentWindow = Window.GetWindow(this);
+                if (parentWindow != null)
+                {
+                    parentWindow.Hide();
+                }
             }
             catch (Exception ex)
             {
@@ -99,11 +105,6 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
             Creator.Instance.isCreating = false;
 
-        }
-
-        protected virtual void OnPageClosed()
-        {
-            PageClosed?.Invoke(this, EventArgs.Empty);
         }
 
         private async Task PythonSetup()
@@ -153,9 +154,11 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
             try
             {
+                string[] kitRequirements = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, $"projects\\{textBox1.Text}\\requirements.txt"));
+
                 ProcessStartInfo start = new ProcessStartInfo();
                 start.FileName = $"cmd.exe";
-                start.Arguments = $"/K conda create -n \"{textBox1.Text}\" {File.ReadAllText(Path.Combine(Environment.CurrentDirectory, $"projects\\{textBox1.Text}\\requirements.txt"))}";
+                start.Arguments = $"/K conda create -n \"{textBox1.Text}\" {kitRequirements[0]} & conda activate {textBox1.Text} & conda install {kitRequirements[1]} & python -m pip install python-dotenv & conda deactivate";
                 start.UseShellExecute = true;
                 start.RedirectStandardOutput = false;
 

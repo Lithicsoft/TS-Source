@@ -80,11 +80,14 @@ namespace Lithicsoft_Trainer_Studio
             }
             else
             {
-                var result = MessageBox.Show("Do you want to exit Trainer Studio?", "Close Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                    System.Windows.Application.Current.Shutdown();
-                else if (result == MessageBoxResult.No)
-                    e.Cancel = true;
+                if (this.Visibility != Visibility.Hidden)
+                {
+                    var result = MessageBox.Show("Do you want to exit Trainer Studio?", "Close Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                        System.Windows.Application.Current.Shutdown();
+                    else if (result == MessageBoxResult.No)
+                        e.Cancel = true;
+                }
             }
         }
     }

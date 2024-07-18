@@ -38,7 +38,7 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             ITransformer model = GenerateModel(mlContext);
         }
 
-        public void DataPrepare(string rootPath, string projectName)
+        public async Task DataPrepare(string rootPath, string projectName)
         {
             var directories = Directory.GetDirectories(rootPath);
 
@@ -62,9 +62,19 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
                 }
             }
 
-            File.WriteAllText($"projects\\{projectName}\\datasets\\tags.tsv", tsvData.ToString());
-            File.WriteAllText($"projects\\{projectName}\\datasets\\test-tags.tsv", tsvData.ToString());
+            var tsvContent = tsvData.ToString();
+            var tagsPath = Path.Combine("projects", projectName, "datasets", "tags.tsv");
+            var testTagsPath = Path.Combine("projects", projectName, "datasets", "test-tags.tsv");
+
+            var writeTasks = new Task[]
+            {
+                File.WriteAllTextAsync(tagsPath, tsvContent),
+                File.WriteAllTextAsync(testTagsPath, tsvContent)
+            };
+
+            await Task.WhenAll(writeTasks);
         }
+
 
         public static ITransformer GenerateModel(MLContext mlContext)
         {
@@ -94,7 +104,7 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
 
             mlContext.Model.Save(model, trainingData.Schema, $"projects\\{projectName}\\outputs\\model.zip");
             using FileStream stream = File.Create($"projects\\{projectName}\\outputs\\onnx_model.onnx");
-
+            
             return model;
         }
 

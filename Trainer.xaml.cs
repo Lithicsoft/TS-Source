@@ -23,6 +23,7 @@ namespace Lithicsoft_Trainer_Studio
             InitializeComponent();
 
             this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.Title = $"{name} - {language} - {type}";
 
             projectName = name;
             projectLanguage = language;
