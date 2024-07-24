@@ -9,10 +9,10 @@
     <Grid>
         <Frame x:Name="Main" Margin="0,0,150,0" NavigationUIVisibility="Hidden"/>
         <StackPanel Margin="650,0,0,0">
-            <Button x:Name="button1" Content="Create new project" Margin="0, 36, 0, 0" Width="130" Foreground="#FF0078D7" Click="button1_Click" Background="#FFF4F4F4" BorderBrush="#FF0078D7"/>
-            <Button Content="Import project" Margin="0, 10, 0, 0" Width="130" Foreground="#FF0078D7" Background="#FFF4F4F4" BorderBrush="#FF0078D7"/>
-            <Button Content="About" Margin="0, 10, 0, 0" Width="130" Foreground="#FF0078D7" Background="#FFF4F4F4" BorderBrush="#FF0078D7"/>
-            <Button x:Name="button4" Content="Back" Margin="0, 300, 0, 0" Width="130" Foreground="#FF0078D7" IsEnabled="False" BorderBrush="#FF0078D7" Click="button4_Click"/>
+            <Button x:Name="button1" Content="Create new project" Margin="0, 36, 0, 0" Width="130" Foreground="#FF0078D7" Click="button1_Click" Background="White" BorderBrush="White"/>
+            <Button Content="Import project" Margin="0, 10, 0, 0" Width="130" Foreground="#FF0078D7" Background="White" BorderBrush="White" Click="Button_Click"/>
+            <Button Content="About" Margin="0, 10, 0, 0" Width="130" Foreground="#FF0078D7" Background="White" BorderBrush="White" Click="Button_Click_1"/>
+            <Button x:Name="button4" Content="Back" Margin="0, 300, 0, 0" Width="130" Foreground="#FF0078D7" IsEnabled="False" BorderBrush="White" Click="button4_Click" Background="White"/>
         </StackPanel>
 
     </Grid>

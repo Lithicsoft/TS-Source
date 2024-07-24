@@ -7,6 +7,9 @@
  */
 
 using Lithicsoft_Trainer_Studio.UserControls.Pages;
+using Microsoft.Win32;
+using System.Diagnostics;
+using System.IO.Compression;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -57,6 +60,45 @@ namespace Lithicsoft_Trainer_Studio.UserControls
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening manager: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Zip files (*.zip)|*.zip";
+                Nullable<bool> result = openFileDialog.ShowDialog();
+                if (result == true)
+                {
+                    string zipPath = openFileDialog.FileName;
+                    string extractPath = "projects";
+                    ZipFile.ExtractToDirectory(zipPath, extractPath);
+                    MessageBox.Show($"Imported '{openFileDialog.FileName}' successfully", "Import Project", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                Main.Content = new Manager();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error importing project: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://lithicsoft.rf.gd/trainerstudio/",
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening info: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
