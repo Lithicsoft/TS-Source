@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
     </Application.Resources>
 </Application>

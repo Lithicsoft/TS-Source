@@ -7,13 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="MainPage_Loaded">
     <Grid>
-        <Frame x:Name="Main" Margin="0,0,150,0" NavigationUIVisibility="Hidden"/>
-        <StackPanel Margin="650,0,0,0">
-            <Button x:Name="button1" Content="Create new project" Margin="0, 36, 0, 0" Width="130" Foreground="#FF0078D7" Click="button1_Click" Background="White" BorderBrush="White"/>
-            <Button Content="Import project" Margin="0, 10, 0, 0" Width="130" Foreground="#FF0078D7" Background="White" BorderBrush="White" Click="Button_Click"/>
-            <Button Content="About" Margin="0, 10, 0, 0" Width="130" Foreground="#FF0078D7" Background="White" BorderBrush="White" Click="Button_Click_1"/>
-            <Button x:Name="button4" Content="Back" Margin="0, 300, 0, 0" Width="130" Foreground="#FF0078D7" IsEnabled="False" BorderBrush="White" Click="button4_Click" Background="White"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Frame x:Name="Main" Margin="10,10,0,10" NavigationUIVisibility="Hidden" HorizontalAlignment="Left" Width="635"/>
+        <StackPanel Margin="650,10,10,10">
+            <Label Content="Action" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="#FF0078D7" FontSize="16" FontWeight="Bold"/>
+            <Button x:Name="button1" Content="  Create new project" HorizontalContentAlignment="Left" Margin="0, 3, 0, 0" Width="130" Foreground="White" Click="button1_Click" BorderBrush="White" Height="30" Background="#FF5D6B99"/>
+            <Button Content="   Import project" HorizontalContentAlignment="Left" Margin="0, 10, 0, 0" Width="130" Foreground="White" Background="#FF40568D" BorderBrush="White" Click="Button_Click" Height="30"/>
+            <Button Content="   About" HorizontalContentAlignment="Left" Margin="0, 10, 0, 0" Width="130" Foreground="White" Background="#FF40568D" BorderBrush="White" Click="Button_Click_1" Height="30"/>
+            <Button x:Name="button4" Content="↩" Margin="0, 285, 110, 0" Width="30" Foreground="White" IsEnabled="False" BorderBrush="White" Click="button4_Click" Background="#FF40568D"/>
         </StackPanel>
-
+        
     </Grid>
 </UserControl>

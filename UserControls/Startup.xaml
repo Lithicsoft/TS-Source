@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Loaded="Startup_Loaded">
-        <Image HorizontalAlignment="Left" Height="450" Margin="0,0,0,0" VerticalAlignment="Top" Width="800" Source="/UserControls/Lithicsoft Trainer Studio.png"/>
+        <Image RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Height="450" Margin="0,0,0,0" VerticalAlignment="Top" Width="800" Source="/UserControls/Lithicsoft Trainer Studio.png"/>
     </Grid>
 </UserControl>
