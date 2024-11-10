@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// License: Apache-2.0
+/*
+ * Utils/LoadingWindow.xaml: Waiting window
+ *
+ * (C) Copyright 2024 Lithicsoft Organization
+ * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
+ */
+
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 {
