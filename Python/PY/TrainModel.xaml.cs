@@ -6,6 +6,7 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
+using Lithicsoft_Trainer_Studio.UserControls.Pages;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -58,6 +59,17 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             button1.IsEnabled = false;
             TrainModel.Instance.isTraining = true;
             label1.Content = "Training your model...";
+
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Hide();
+            }
+
+            var loadingWindow = new LoadingWindow("Training your model...");
+            loadingWindow.Owner = parentWindow;
+            loadingWindow.Show();
+
             try
             {
                 ProcessStartInfo start = new ProcessStartInfo();
@@ -72,6 +84,8 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             {
                 MessageBox.Show($"Error training model: {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            parentWindow.Show();
 
             label1.Content = "Done!";
             TrainModel.Instance.isTraining = true;

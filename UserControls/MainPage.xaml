@@ -14,8 +14,8 @@
         <StackPanel Margin="650,10,10,10">
             <Label Content="Action" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="#FF0078D7" FontSize="16" FontWeight="Bold"/>
             <Button x:Name="button1" Content="  Create new project" HorizontalContentAlignment="Left" Margin="0, 3, 0, 0" Width="130" Foreground="White" Click="button1_Click" BorderBrush="White" Height="30" Background="#FF5D6B99"/>
-            <Button Content="   Import project" HorizontalContentAlignment="Left" Margin="0, 10, 0, 0" Width="130" Foreground="White" Background="#FF40568D" BorderBrush="White" Click="Button_Click" Height="30"/>
-            <Button Content="   About" HorizontalContentAlignment="Left" Margin="0, 10, 0, 0" Width="130" Foreground="White" Background="#FF40568D" BorderBrush="White" Click="Button_Click_1" Height="30"/>
+            <Button Content="   Import project" HorizontalContentAlignment="Left" Margin="0, 10, 0, 0" Width="130" Foreground="White" Background="#FF5D6B99" BorderBrush="White" Click="Button_Click" Height="30"/>
+            <Button Content="   About" HorizontalContentAlignment="Left" Margin="0, 10, 0, 0" Width="130" Foreground="White" Background="#FF5D6B99" BorderBrush="White" Click="Button_Click_1" Height="30"/>
             <Button x:Name="button4" Content="↩" Margin="0, 285, 110, 0" Width="30" Foreground="White" IsEnabled="False" BorderBrush="White" Click="button4_Click" Background="#FF40568D"/>
         </StackPanel>
         

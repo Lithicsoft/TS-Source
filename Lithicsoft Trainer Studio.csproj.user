@@ -34,6 +34,9 @@
     <Compile Update="UserControls\Pages\Creator.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Utils\LoadingWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UserControls\Pages\Manager.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -88,6 +91,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\Pages\Creator.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Utils\LoadingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\Pages\Manager.xaml">

@@ -6,6 +6,7 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
+using Lithicsoft_Trainer_Studio.UserControls.Pages;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,6 +58,17 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             button1.IsEnabled = false;
             TrainModel.Instance.isTraining = true;
             label1.Content = "Training your model...";
+
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Hide();
+            }
+
+            var loadingWindow = new LoadingWindow("Training your model...");
+            loadingWindow.Owner = parentWindow;
+            loadingWindow.Show();
+
             try
             {
                 CSharpML.ValuePrediction valuePrediction = new CSharpML.ValuePrediction();
@@ -66,6 +78,9 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             {
                 MessageBox.Show($"Error training model {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            parentWindow.Show();
+
             label1.Content = "Done!";
             TrainModel.Instance.isTraining = true;
             button1.IsEnabled = true;

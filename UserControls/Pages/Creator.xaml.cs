@@ -62,11 +62,24 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
+
             button1.IsEnabled = false;
             textBox1.IsEnabled = false;
             comboBox1.IsEnabled = false;
             comboBox2.IsEnabled = false;
             Creator.Instance.isCreating = true;
+
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Hide();
+            }
+
+            var loadingWindow = new LoadingWindow("Creating Project...");
+            loadingWindow.Owner = parentWindow;
+            loadingWindow.Show();
+
+            await Task.Delay(3000);
 
             try
             {
@@ -89,14 +102,10 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     }
                 }
 
+                loadingWindow.Close();
+
                 Trainer trainer = new Trainer(textBox1.Text, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
                 trainer.Show();
-
-                Window parentWindow = Window.GetWindow(this);
-                if (parentWindow != null)
-                {
-                    parentWindow.Hide();
-                }
             }
             catch (Exception ex)
             {
