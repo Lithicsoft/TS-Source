@@ -8,7 +8,7 @@
 
 using System.Windows;
 
-namespace Lithicsoft_Trainer_Studio.UserControls.Pages
+namespace Lithicsoft_Trainer_Studio.Utils
 {
     /// <summary>
     /// Interaction logic for LoadingWindow.xaml
