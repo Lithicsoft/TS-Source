@@ -6,7 +6,7 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
-using Lithicsoft_Trainer_Studio.UserControls.Pages;
+using Lithicsoft_Trainer_Studio.Utils;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;

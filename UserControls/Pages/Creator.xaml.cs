@@ -6,6 +6,7 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
+using Lithicsoft_Trainer_Studio.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
