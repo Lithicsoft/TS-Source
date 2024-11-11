@@ -80,6 +80,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             }
 
             parentWindow.Show();
+            loadingWindow.Close();
 
             label1.Content = "Done!";
             TrainModel.Instance.isTraining = true;

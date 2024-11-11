@@ -86,6 +86,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             }
 
             parentWindow.Show();
+            loadingWindow.Close();
 
             label1.Content = "Done!";
             TrainModel.Instance.isTraining = true;

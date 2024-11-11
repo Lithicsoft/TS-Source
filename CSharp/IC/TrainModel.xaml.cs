@@ -81,6 +81,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             }
 
             parentWindow.Show();
+            loadingWindow.Close();
 
             label1.Content = "Done!";
 
