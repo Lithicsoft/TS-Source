@@ -23,14 +23,14 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             InitializeComponent();
         }
 
-        public event EventHandler PageClosed;
+        public event EventHandler? PageClosed;
 
         private void Manager_Loaded(object sender, RoutedEventArgs e)
         {
-            updateProjectList();
+            UpdateProjectList();
         }
 
-        private void updateProjectList()
+        private void UpdateProjectList()
         {
             try
             {
@@ -73,14 +73,11 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     string projectLanguage = selectedProject.ProjectLanguage;
                     string projectType = selectedProject.ProjectType;
 
-                    Trainer trainer = new Trainer(projectName, projectLanguage, projectType);
+                    Trainer trainer = new(projectName, projectLanguage, projectType);
                     trainer.Show();
 
                     Window parentWindow = Window.GetWindow(this);
-                    if (parentWindow != null)
-                    {
-                        parentWindow.Hide();
-                    }
+                    parentWindow?.Hide();
                 }
             }
             catch (Exception ex)

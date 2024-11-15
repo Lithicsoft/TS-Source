@@ -21,7 +21,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
     /// </summary>
     public partial class ModelTester : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public ModelTester(string name)
         {
@@ -30,8 +30,8 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             projectName = name;
         }
 
-        private MLContext mlContext;
-        private PredictionEngine<ImageData, ImagePrediction> predictionEngine;
+        private MLContext? mlContext;
+        private PredictionEngine<ImageData, ImagePrediction>? predictionEngine;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -41,38 +41,47 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             button1.IsEnabled = false;
-            try
+
+            await Task.Run(() =>
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image files (*.png, *.jpg, *.webp)|*.png;*.jpg;*.webp";
-                Nullable<bool> result = openFileDialog.ShowDialog();
-                if (result == true)
+                try
                 {
-                    BitmapImage bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(openFileDialog.FileName, UriKind.Absolute);
-                    bitmap.EndInit();
-
-                    image1.Source = bitmap;
-
-                    InitModel();
-                    var imageData = new ImageData()
+                    OpenFileDialog openFileDialog = new()
                     {
-                        ImagePath = openFileDialog.FileName
+                        Filter = "Image files (*.png, *.jpg, *.webp)|*.png;*.jpg;*.webp"
                     };
+                    Nullable<bool> result = openFileDialog.ShowDialog();
+                    if (result == true)
+                    {
+                        BitmapImage bitmap = new();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(openFileDialog.FileName, UriKind.Absolute);
+                        bitmap.EndInit();
 
-                    var prediction = predictionEngine.Predict(imageData);
+                        image1.Source = bitmap;
 
-                    label1.Content = "Predict: " + prediction.PredictedLabelValue;
+                        InitModel();
+                        var imageData = new ImageData()
+                        {
+                            ImagePath = openFileDialog.FileName
+                        };
+
+                        if (predictionEngine != null)
+                        {
+                            var prediction = predictionEngine.Predict(imageData);
+                            label1.Content = "Predict: " + prediction.PredictedLabelValue;
+                        }
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error opening zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+
             button1.IsEnabled = true;
         }
 
@@ -81,8 +90,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             try
             {
                 mlContext = new MLContext();
-                DataViewSchema predictionPipelineSchema;
-                ITransformer predictionPipeline = mlContext.Model.Load($"projects\\{projectName}\\outputs\\model.zip", out predictionPipelineSchema);
+                ITransformer predictionPipeline = mlContext.Model.Load($"projects\\{projectName}\\outputs\\model.zip", out DataViewSchema predictionPipelineSchema);
                 predictionEngine = mlContext.Model.CreatePredictionEngine<ImageData, ImagePrediction>(predictionPipeline);
             }
             catch (Exception ex)
@@ -95,17 +103,17 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
         public class ImageData
         {
             [LoadColumn(0)]
-            public string ImagePath;
+            public string? ImagePath;
 
             [LoadColumn(1)]
-            public string Label;
+            public string? Label;
         }
 
         public class ImagePrediction : ImageData
         {
-            public float[] Score;
+            public float[]? Score;
 
-            public string PredictedLabelValue;
+            public string? PredictedLabelValue;
         }
     }
 }

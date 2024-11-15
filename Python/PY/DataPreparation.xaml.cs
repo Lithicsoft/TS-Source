@@ -6,6 +6,7 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
+using Lithicsoft_Trainer_Studio.Utils;
 using Microsoft.Win32;
 using System.IO;
 using System.IO.Compression;
@@ -19,7 +20,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
     /// </summary>
     public partial class DataPreparation : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public DataPreparation(string name)
         {
@@ -32,8 +33,10 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Zip files (*.zip)|*.zip";
+                OpenFileDialog openFileDialog = new()
+                {
+                    Filter = "Zip files (*.zip)|*.zip"
+                };
                 Nullable<bool> result = openFileDialog.ShowDialog();
                 if (result == true)
                 {
@@ -46,37 +49,53 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             }
         }
 
-        private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
+        private async void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            loadDataset(textBox1.Text);
+            await LoadDataset(textBox1.Text);
         }
 
-        private void loadDataset(string path)
+        private async Task LoadDataset(string path)
         {
             button1.IsEnabled = false;
             textBox1.IsEnabled = false;
 
-            if (File.Exists(path))
+            Window parentWindow = Window.GetWindow(this);
+            parentWindow?.Hide();
+
+            var loadingWindow = new LoadingWindow("Preparing your dataset...")
             {
-                try
+                Owner = parentWindow
+            };
+            loadingWindow.Show();
+
+            await Task.Run(() =>
+            {
+                if (File.Exists(path))
                 {
-                    if (Directory.Exists($"projects\\{projectName}\\datasets"))
+                    try
                     {
-                        Directory.Delete($"projects\\{projectName}\\datasets", true);
+                        if (Directory.Exists($"projects\\{projectName}\\datasets"))
+                        {
+                            Directory.Delete($"projects\\{projectName}\\datasets", true);
+                        }
+                        Directory.CreateDirectory($"projects\\{projectName}\\datasets");
+                        string extractPath = $"projects\\{projectName}\\datasets";
+                        ZipFile.ExtractToDirectory(path, extractPath);
                     }
-                    Directory.CreateDirectory($"projects\\{projectName}\\datasets");
-                    string extractPath = $"projects\\{projectName}\\datasets";
-                    ZipFile.ExtractToDirectory(path, extractPath);
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            else
-            {
-                MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            });
+
+            parentWindow?.Show();
+            loadingWindow.Close();
+
             button1.IsEnabled = true;
             textBox1.IsEnabled = true;
         }

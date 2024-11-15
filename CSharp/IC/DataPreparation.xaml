@@ -10,7 +10,7 @@
 
     <Grid>
         <Label Content="Choose your dataset zip file:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530" Height="30" Foreground="#FF5D6B99" BorderBrush="#FF5D6B99" TextChanged="textBox1_TextChanged" Background="#FFF4F4F4" SelectionBrush="#FF5D6B99"/>
+        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530" Height="30" Foreground="#FF5D6B99" BorderBrush="#FF5D6B99" TextChanged="TextBox1_TextChanged" Background="#FFF4F4F4" SelectionBrush="#FF5D6B99"/>
         <Button x:Name="button1" Content="Choose file" HorizontalAlignment="Left" Margin="545,41,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#FF5D6B99" Foreground="White" BorderBrush="White" Click="Button_Click"/>
 
     </Grid>

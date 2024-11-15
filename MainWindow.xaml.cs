@@ -29,7 +29,7 @@ namespace Lithicsoft_Trainer_Studio
             {
                 this.WindowStyle = WindowStyle.None;
 
-                Startup startup = new Startup();
+                Startup startup = new();
                 startup.UserControlClosed += Startup_UserControlClosed;
                 MainStackPanel.Children.Add(startup);
 
@@ -40,7 +40,7 @@ namespace Lithicsoft_Trainer_Studio
 
                 this.WindowStyle = WindowStyle.SingleBorderWindow;
 
-                MainPage mainPage = new MainPage();
+                MainPage mainPage = new();
                 MainStackPanel.Children.Add(mainPage);
             }
             catch (Exception ex)
@@ -61,12 +61,12 @@ namespace Lithicsoft_Trainer_Studio
         private Task WaitForUserControlToCloseAsync(Startup userControl)
         {
             var tcs = new TaskCompletionSource<bool>();
-            EventHandler handler = null;
-            handler = (s, e) =>
+            void handler(object? s, EventArgs e)
             {
                 userControl.UserControlClosed -= handler;
                 tcs.SetResult(true);
-            };
+            }
+
             userControl.UserControlClosed += handler;
             return tcs.Task;
         }

@@ -19,7 +19,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
     
     public partial class TrainModel : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public TrainModel(string name)
         {
@@ -28,15 +28,14 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             projectName = name;
         }
 
-        private static TrainModel _instance;
+        private static TrainModel? _instance;
         public bool isTraining = false;
 
         public static TrainModel Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new TrainModel(string.Empty);
+                _instance ??= new TrainModel(string.Empty);
                 return _instance;
             }
         }
@@ -54,33 +53,35 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             }
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private async void Button1_Click(object sender, RoutedEventArgs e)
         {
             button1.IsEnabled = false;
             TrainModel.Instance.isTraining = true;
             label1.Content = "Training your model...";
 
             Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
-            {
-                parentWindow.Hide();
-            }
+            parentWindow?.Hide();
 
-            var loadingWindow = new LoadingWindow("Training your model...");
-            loadingWindow.Owner = parentWindow;
+            var loadingWindow = new LoadingWindow("Training your model...")
+            {
+                Owner = parentWindow
+            };
             loadingWindow.Show();
 
-            try
+            await Task.Run(() =>
             {
-                CSharpML.ImageClassification imageClassification = new CSharpML.ImageClassification();
-                imageClassification.Train(projectName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error training model {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                try
+                {
+                    CSharpML.ImageClassification imageClassification = new();
+                    imageClassification.Train(projectName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error training model {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
 
-            parentWindow.Show();
+            parentWindow?.Show();
             loadingWindow.Close();
 
             label1.Content = "Done!";

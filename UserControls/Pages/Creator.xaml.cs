@@ -35,7 +35,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
         private ViewModelType viewModelType;
         private ViewModel viewModel;
 
-        private static Creator _instance;
+        private static Creator? _instance;
         public bool isCreating = false;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -55,8 +55,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
         {
             get
             {
-                if (_instance == null)
-                    _instance = new Creator();
+                _instance ??= new Creator();
                 return _instance;
             }
         }
@@ -71,47 +70,50 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             Creator.Instance.isCreating = true;
 
             Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
-            {
-                parentWindow.Hide();
-            }
+            parentWindow?.Hide();
 
-            var loadingWindow = new LoadingWindow("Creating Project...");
-            loadingWindow.Owner = parentWindow;
+            var loadingWindow = new LoadingWindow("Creating Project...")
+            {
+                Owner = parentWindow
+            };
             loadingWindow.Show();
 
-            await Task.Delay(3000);
+            await Task.Delay(1000);
 
-            try
+            string ProjectName = textBox1.Text.Replace("\"", "").Replace("&", "").Replace("|", "").Replace(";", "");
+            string ProjectLanguage = comboBox1.SelectedItem.ToString();
+            string ProjectType = comboBox2.SelectedItem.ToString();
+
+            await Task.Run(async () =>
             {
-                textBox1.Text = textBox1.Text.Replace("\"", "").Replace("&", "").Replace("|", "").Replace(";", "");
-
-                Directory.CreateDirectory($"projects\\{textBox1.Text}");
-                File.WriteAllLines($"projects\\{textBox1.Text}\\{textBox1.Text}.project", [comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString()]);
-                Directory.CreateDirectory($"projects\\{textBox1.Text}\\outputs");
-
-                if (comboBox1.SelectedItem.ToString() != "CSharp")
+                try
                 {
-                    try
+                    Directory.CreateDirectory($"projects\\{ProjectName}");
+                    await File.WriteAllLinesAsync($"projects\\{ProjectName}\\{ProjectName}.project", [ProjectLanguage, ProjectType]);
+                    Directory.CreateDirectory($"projects\\{ProjectName}\\outputs");
+
+                    if (ProjectLanguage != "CSharp")
                     {
-                        await PythonSetup();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error installing dependencies package: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        Environment.Exit(1);
+                        try
+                        {
+                            await PythonSetup();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error installing dependencies package: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            Environment.Exit(1);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error creating project: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
 
-                loadingWindow.Close();
-
-                Trainer trainer = new Trainer(textBox1.Text, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
-                trainer.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error creating project: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            Trainer trainer = new(textBox1.Text, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
+            loadingWindow.Hide();
+            trainer.Show();      
 
             Creator.Instance.isCreating = false;
 
@@ -122,16 +124,16 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             await InstallPackageDependencies(comboBox1.SelectedItem.ToString());
         }
 
-        private bool CheckForDiscreteGPU()
+        private static bool GetCheckForDiscreteGPU()
         {
             bool discreteGPUFound = false;
 
             try
             {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select * from Win32_VideoController");
+                ManagementObjectSearcher searcher = new("select * from Win32_VideoController");
                 ManagementObjectCollection moc = searcher.Get();
 
-                foreach (ManagementObject mo in moc)
+                foreach (ManagementObject mo in moc.Cast<ManagementObject>())
                 {
                     string adapterCompatibility = mo["AdapterCompatibility"]?.ToString();
                     string description = mo["Description"]?.ToString();
@@ -160,17 +162,21 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
         private async Task InstallPackageDependencies(string language)
         {
-            await DownloadKitFiles(textBox1.Text, comboBox2.SelectedItem.ToString(), CheckForDiscreteGPU());
+            ArgumentNullException.ThrowIfNull(language);
+
+            await DownloadKitFiles(textBox1.Text, comboBox2.SelectedItem.ToString(), GetCheckForDiscreteGPU());
 
             try
             {
                 string[] kitRequirements = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, $"projects\\{textBox1.Text}\\requirements.txt"));
 
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = $"cmd.exe";
-                start.Arguments = $"/K conda create -n \"{textBox1.Text}\" {kitRequirements[0]} & conda activate {textBox1.Text} & conda install {kitRequirements[1]} & python -m pip install python-dotenv & conda deactivate";
-                start.UseShellExecute = true;
-                start.RedirectStandardOutput = false;
+                ProcessStartInfo start = new()
+                {
+                    FileName = $"cmd.exe",
+                    Arguments = $"/K conda create -n \"{textBox1.Text}\" {kitRequirements[0]} & conda activate {textBox1.Text} & conda install {kitRequirements[1]} & python -m pip install python-dotenv & conda deactivate",
+                    UseShellExecute = true,
+                    RedirectStandardOutput = false
+                };
 
                 Process process = Process.Start(start);
             }
@@ -181,9 +187,9 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             }
         }
 
-        private async Task DownloadKitFiles(string projectPath, string projectType, bool usingGPU)
+        private static async Task DownloadKitFiles(string projectPath, string projectType, bool usingGPU)
         {
-            Dictionary<string, string> pythonTrainerKit = new Dictionary<string, string>
+            Dictionary<string, string> pythonTrainerKit = new()
             {
                 {"Text Generation (RNN)", "rnn_text_generation"},
                 {"Text Generation (LSTM)", "lstm_text_generation"}
@@ -191,23 +197,20 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
             try
             {
-                using (var client = new WebClient())
+                using var client = new WebClient();
+
+                var baseUri = $"https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/{pythonTrainerKit[projectType]}/";
+                if (usingGPU)
                 {
-
-                    var baseUri = $"https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/{pythonTrainerKit[projectType]}/";
-                    if (usingGPU)
-                    {
-                        await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements-gpu.txt"), $"projects\\{projectPath}\\requirements.txt");
-                    }
-                    else
-                    {
-                        await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements-cpu.txt"), $"projects\\{projectPath}\\requirements.txt");
-                    }
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + "tester.py"), $"projects\\{projectPath}\\tester.py");
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
-
+                    await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements-gpu.txt"), $"projects\\{projectPath}\\requirements.txt");
                 }
+                else
+                {
+                    await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements-cpu.txt"), $"projects\\{projectPath}\\requirements.txt");
+                }
+                await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
+                await client.DownloadFileTaskAsync(new Uri(baseUri + "tester.py"), $"projects\\{projectPath}\\tester.py");
+                await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
             }
             catch (WebException ex)
             {
@@ -216,7 +219,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             }
         }
 
-        private void checkStation()
+        private void CheckStation()
         {
             if (comboBox1.SelectedItem == null || comboBox2.SelectedItem == null || string.IsNullOrEmpty(textBox1.Text))
             {
@@ -230,19 +233,19 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            checkStation();
+            CheckStation();
         }
 
-        private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             viewModelType.UpdateListOfTypes(comboBox1);
 
-            checkStation();
+            CheckStation();
         }
 
-        private void comboBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            checkStation();
+            CheckStation();
         }
 
         public class ViewModel
@@ -251,12 +254,12 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
             public ViewModel()
             {
-                ListOfLanguages = new ObservableCollection<string>
-                {
+                ListOfLanguages =
+                [
                     "CSharp",
                     "Python (TensorFlow)",
                     "Python (PyTorch)"
-                };
+                ];
             }
         }
 
@@ -275,12 +278,12 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
             public ViewModelType()
             {
-                ListOfTypes = new ObservableCollection<string>();
+                ListOfTypes = [];
             }
 
             public void UpdateListOfTypes(ComboBox comboBox1)
             {
-                ObservableCollection<string> items = new ObservableCollection<string>();
+                ObservableCollection<string> items = [];
                 bool createAble = false;
 
                 if (comboBox1.SelectedItem != null)
@@ -289,22 +292,22 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
                     if (selectedItem == "CSharp")
                     {
-                        items = new ObservableCollection<string> { "Image Classification", "Value Prediction" };
+                        items = ["Image Classification", "Value Prediction"];
                         createAble = true;
                     }
                     else if (selectedItem == "Python (TensorFlow)")
                     {
-                        items = new ObservableCollection<string> { "Text Generation (RNN)" };
+                        items = ["Text Generation (RNN)"];
                         createAble = true;
                     }
                     else if (selectedItem == "Python (PyTorch)")
                     {
-                        items = new ObservableCollection<string> { "Text Generation (LSTM)" };
+                        items = ["Text Generation (LSTM)"];
                         createAble = true;
                     }
                 }
 
-                ListOfTypes = createAble ? items : new ObservableCollection<string>();
+                ListOfTypes = createAble ? items : [];
             }
 
             public event PropertyChangedEventHandler PropertyChanged;

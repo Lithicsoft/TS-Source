@@ -19,7 +19,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
     /// </summary>
     public partial class ModelTester : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public ModelTester(string name)
         {
@@ -28,8 +28,8 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             projectName = name;
         }
 
-        private MLContext mlContext;
-        private PredictionEngine<ModelInput, ModelOutput> predictionEngine;
+        private MLContext? mlContext;
+        private PredictionEngine<ModelInput, ModelOutput>? predictionEngine;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -43,28 +43,33 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             button1.IsEnabled = false;
-            try
+
+            await Task.Run(() =>
             {
-                InitModel();
-                var sampleInput = new ModelInput
+                try
                 {
-                    A = float.Parse(ValueA.Text),
-                    B = float.Parse(ValueB.Text),
-                    C = float.Parse(ValueC.Text),
-                    D = float.Parse(ValueD.Text)
-                };
+                    InitModel();
+                    var sampleInput = new ModelInput
+                    {
+                        A = float.Parse(ValueA.Text),
+                        B = float.Parse(ValueB.Text),
+                        C = float.Parse(ValueC.Text),
+                        D = float.Parse(ValueD.Text)
+                    };
 
-                var prediction = predictionEngine.Predict(sampleInput);
+                    var prediction = predictionEngine.Predict(sampleInput);
 
-                label1.Content = "Predict: " + prediction.Prediction;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                    label1.Content = "Predict: " + prediction.Prediction;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+
             button1.IsEnabled = true;
         }
 
@@ -73,8 +78,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             try
             {
                 mlContext = new MLContext();
-                DataViewSchema predictionPipelineSchema;
-                ITransformer predictionPipeline = mlContext.Model.Load($"projects\\{projectName}\\outputs\\model.zip", out predictionPipelineSchema);
+                ITransformer predictionPipeline = mlContext.Model.Load($"projects\\{projectName}\\outputs\\model.zip", out DataViewSchema predictionPipelineSchema);
                 predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(predictionPipeline);
             }
             catch (Exception ex)

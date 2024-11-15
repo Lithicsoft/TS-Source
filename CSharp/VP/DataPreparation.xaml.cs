@@ -6,6 +6,7 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
+using Lithicsoft_Trainer_Studio.Utils;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
@@ -18,7 +19,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
     /// </summary>
     public partial class DataPreparation : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public DataPreparation(string name)
         {
@@ -31,8 +32,10 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Csv files (*.csv)|*.csv";
+                OpenFileDialog openFileDialog = new()
+                {
+                    Filter = "Csv files (*.csv)|*.csv"
+                };
                 Nullable<bool> result = openFileDialog.ShowDialog();
                 if (result == true)
                 {
@@ -45,55 +48,71 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             }
         }
 
-        private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
+        private async void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            loadDataset(textBox1.Text);
+            await LoadDataset(textBox1.Text);
         }
 
-        private void loadDataset(string path)
+        private async Task LoadDataset(string path)
         {
             button1.IsEnabled = false;
             textBox1.IsEnabled = false;
 
-            try
-            {
-                if (CheckCsvFormat(path))
-                {
-                    MessageBox.Show("The csv structure is invalid", "Dataset Structure", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error checking csv file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            Window parentWindow = Window.GetWindow(this);
+            parentWindow?.Hide();
 
-            if (File.Exists(path))
+            var loadingWindow = new LoadingWindow("Preparing your dataset...")
+            {
+                Owner = parentWindow
+            };
+            loadingWindow.Show();
+
+            await Task.Run(() =>
             {
                 try
                 {
-                    if (Directory.Exists($"projects\\{projectName}\\datasets"))
+                    if (CheckCsvFormat(path))
                     {
-                        Directory.Delete($"projects\\{projectName}\\datasets", true);
+                        MessageBox.Show("The csv structure is invalid", "Dataset Structure", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
-                    Directory.CreateDirectory($"projects\\{projectName}\\datasets");
-                    File.Copy(path, $"projects\\{projectName}\\datasets\\dataset.csv");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error checking csv file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-            }
-            else
-            {
-                MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
+                if (File.Exists(path))
+                {
+                    try
+                    {
+                        if (Directory.Exists($"projects\\{projectName}\\datasets"))
+                        {
+                            Directory.Delete($"projects\\{projectName}\\datasets", true);
+                        }
+                        Directory.CreateDirectory($"projects\\{projectName}\\datasets");
+                        File.Copy(path, $"projects\\{projectName}\\datasets\\dataset.csv");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+
+            parentWindow?.Show();
+            loadingWindow.Close();
+
             button1.IsEnabled = true;
             textBox1.IsEnabled = true;
         }
 
-        private bool CheckCsvFormat(string filePath)
+        private static bool CheckCsvFormat(string filePath)
         {
             var lines = File.ReadAllLines(filePath);
 

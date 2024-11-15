@@ -9,7 +9,7 @@
       Title="ModelResult" Loaded="Page_Loaded">
 
     <Grid>
-        <Button x:Name="button1" Content="Open output folder" HorizontalAlignment="Left" Margin="515,8,0,0" Height="30" VerticalAlignment="Top" BorderBrush="White" Foreground="White" Background="#FF5D6B99" Width="140" IsEnabled="False" Click="button1_Click"/>
+        <Button x:Name="button1" Content="Open output folder" HorizontalAlignment="Left" Margin="515,8,0,0" Height="30" VerticalAlignment="Top" BorderBrush="White" Foreground="White" Background="#FF5D6B99" Width="140" IsEnabled="False" Click="Button1_Click"/>
         <RichTextBox x:Name="DocCode" Margin="0,41,10,10" MaxHeight="450" MaxWidth="655" IsDocumentEnabled="True">
             <FlowDocument>
                 <Paragraph>

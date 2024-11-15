@@ -18,7 +18,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
     /// </summary>
     public partial class ModelTester : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public ModelTester(string name)
         {
@@ -35,23 +35,30 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             button1.IsEnabled = false;
-            try
-            {
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = $"cmd.exe";
-                start.Arguments = $"/K conda activate \"{projectName}\" & python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\tester.py")}\" & conda deactivate";
-                start.UseShellExecute = true;
-                start.RedirectStandardOutput = false;
 
-                Process process = Process.Start(start);
-            }
-            catch (Exception ex)
+            await Task.Run(() =>
             {
-                MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                try
+                {
+                    ProcessStartInfo start = new()
+                    {
+                        FileName = $"cmd.exe",
+                        Arguments = $"/K conda activate \"{projectName}\" & python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\tester.py")}\" & conda deactivate",
+                        UseShellExecute = true,
+                        RedirectStandardOutput = false
+                    };
+
+                    Process process = Process.Start(start);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+
             button1.IsEnabled = true;
         }
     }

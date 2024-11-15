@@ -16,7 +16,7 @@ namespace Lithicsoft_Trainer_Studio
     /// </summary>
     public partial class Trainer : Window
     {
-        private string projectName = string.Empty, projectLanguage = string.Empty, projectType = string.Empty;
+        private readonly string projectName = string.Empty, projectLanguage = string.Empty, projectType = string.Empty;
 
         public Trainer(string name, string language, string type)
         {
@@ -38,12 +38,12 @@ namespace Lithicsoft_Trainer_Studio
                 {
                     if (projectType == "Image Classification")
                     {
-                        ImageClassification imageClassification = new ImageClassification(projectName);
+                        ImageClassification imageClassification = new(projectName);
                         this.MainStackPanel.Children.Add(imageClassification);
                     }
                     else if (projectType == "Value Prediction")
                     {
-                        ValuePrediction valuePrediction = new ValuePrediction(projectName);
+                        ValuePrediction valuePrediction = new(projectName);
                         this.MainStackPanel.Children.Add(valuePrediction);
                     }
                     else
@@ -53,7 +53,7 @@ namespace Lithicsoft_Trainer_Studio
                 }
                 else
                 {
-                    Python.Python python = new Python.Python(projectName);
+                    Python.Python python = new(projectName);
                     this.MainStackPanel.Children.Add(python);
                 }
             }

@@ -6,6 +6,7 @@
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
  */
 
+using Lithicsoft_Trainer_Studio.Utils;
 using Microsoft.Win32;
 using System.IO;
 using System.IO.Compression;
@@ -19,7 +20,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
     /// </summary>
     public partial class DataPreparation : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public DataPreparation(string name)
         {
@@ -32,8 +33,10 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Zip files (*.zip)|*.zip";
+                OpenFileDialog openFileDialog = new()
+                {
+                    Filter = "Zip files (*.zip)|*.zip"
+                };
                 Nullable<bool> result = openFileDialog.ShowDialog();
                 if (result == true)
                 {
@@ -46,20 +49,30 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             }
         }
 
-        private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
+        private async void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            loadDataset(textBox1.Text);
+            await LoadDataset(textBox1.Text);
         }
 
-        private async Task loadDataset(string path)
+        private async Task LoadDataset(string path)
         {
             button1.IsEnabled = false;
             textBox1.IsEnabled = false;
 
-            try
+            Window parentWindow = Window.GetWindow(this);
+            parentWindow?.Hide();
+
+            var loadingWindow = new LoadingWindow("Preparing your dataset...")
             {
-                using (ZipArchive archive = ZipFile.OpenRead(path))
+                Owner = parentWindow
+            };
+            loadingWindow.Show();
+
+            await Task.Run(() =>
+            {
+                try
                 {
+                    using ZipArchive archive = ZipFile.OpenRead(path);
                     var validExtensions = new[] { ".png", ".jpg", ".webp" };
 
                     bool isValid = archive.Entries
@@ -73,38 +86,43 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                         return;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error checking zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (File.Exists(path))
-            {
-                try
-                {
-                    if (Directory.Exists($"projects\\{projectName}\\datasets"))
-                    {
-                        Directory.Delete($"projects\\{projectName}\\datasets", true);
-                    }
-                    Directory.CreateDirectory($"projects\\{projectName}\\datasets");
-                    string extractPath = $"projects\\{projectName}\\datasets";
-                    ZipFile.ExtractToDirectory(path, extractPath);
-                    CSharpML.ImageClassification imageClassification = new CSharpML.ImageClassification();
-                    await imageClassification.DataPrepare($"projects\\{projectName}\\datasets", projectName);
-                }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error checking zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-            }
-            else
-            {
-                MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+
+                if (File.Exists(path))
+                {
+                    try
+                    {
+                        if (Directory.Exists($"projects\\{projectName}\\datasets"))
+                        {
+                            Directory.Delete($"projects\\{projectName}\\datasets", true);
+                        }
+                        Directory.CreateDirectory($"projects\\{projectName}\\datasets");
+                        string extractPath = $"projects\\{projectName}\\datasets";
+                        ZipFile.ExtractToDirectory(path, extractPath);
+                        CSharpML.ImageClassification imageClassification = new();
+                        imageClassification.DataPrepare($"projects\\{projectName}\\datasets", projectName);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+            });
+
+            parentWindow?.Show();
+            loadingWindow.Close();
+
             button1.IsEnabled = true;
             textBox1.IsEnabled = true;
         }

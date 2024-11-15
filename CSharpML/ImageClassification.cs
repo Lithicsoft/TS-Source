@@ -38,7 +38,7 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             ITransformer model = GenerateModel(mlContext);
         }
 
-        public async Task DataPrepare(string rootPath, string projectName)
+        public void DataPrepare(string rootPath, string projectName)
         {
             var directories = Directory.GetDirectories(rootPath);
 
@@ -66,13 +66,8 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             var tagsPath = Path.Combine("projects", projectName, "datasets", "tags.tsv");
             var testTagsPath = Path.Combine("projects", projectName, "datasets", "test-tags.tsv");
 
-            var writeTasks = new Task[]
-            {
-                File.WriteAllTextAsync(tagsPath, tsvContent),
-                File.WriteAllTextAsync(testTagsPath, tsvContent)
-            };
-
-            await Task.WhenAll(writeTasks);
+            File.WriteAllText(tagsPath, tsvContent);
+            File.WriteAllText(testTagsPath, tsvContent);
         }
 
 
@@ -120,17 +115,17 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
         public class ImageData
         {
             [LoadColumn(0)]
-            public string ImagePath;
+            public string? ImagePath;
 
             [LoadColumn(1)]
-            public string Label;
+            public string? Label;
         }
 
         public class ImagePrediction : ImageData
         {
-            public float[] Score;
+            public float[]? Score;
 
-            public string PredictedLabelValue;
+            public string? PredictedLabelValue;
         }
     }
 }

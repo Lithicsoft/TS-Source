@@ -18,7 +18,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
     /// </summary>
     public partial class ModelResult : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public ModelResult(string name)
         {
@@ -39,7 +39,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             DocCode.Document.Blocks.Add(new Paragraph(new Run(code)));
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void Button1_Click(object sender, RoutedEventArgs e)
         {
             try
             {

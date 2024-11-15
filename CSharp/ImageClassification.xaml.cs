@@ -15,7 +15,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp
     /// </summary>
     public partial class ImageClassification : UserControl
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public ImageClassification(string name)
         {

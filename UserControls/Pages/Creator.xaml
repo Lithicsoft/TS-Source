@@ -11,7 +11,7 @@
     <Grid>
         <Label Content="New project" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0078D7" FontSize="16" FontWeight="Bold" Margin="5,0,0,0"/>
         <Rectangle HorizontalAlignment="Center" Height="414" Margin="0,36,0,0" Stroke="#FF828790" VerticalAlignment="Top" Width="635"/>
-        <ComboBox x:Name="comboBox1" ItemsSource="{Binding ListOfLanguages}" HorizontalAlignment="Center" Margin="0,128,0,0" VerticalAlignment="Top" Width="616" Height="30" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" IsEditable="True" IsReadOnly="True" SelectionChanged="comboBox1_SelectionChanged">
+        <ComboBox x:Name="comboBox1" ItemsSource="{Binding ListOfLanguages}" HorizontalAlignment="Center" Margin="0,128,0,0" VerticalAlignment="Top" Width="616" Height="30" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" IsEditable="True" IsReadOnly="True" SelectionChanged="ComboBox1_SelectionChanged">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#FFF0F0F0"/>
@@ -26,7 +26,7 @@
         <Label Content="Project language" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
         <Label Content="Project Type" HorizontalAlignment="Left" Margin="10,163,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
 
-        <ComboBox x:Name="comboBox2" ItemsSource="{Binding ListOfTypes}" HorizontalAlignment="Center" Margin="0,190,0,0" VerticalAlignment="Top" Width="616" Height="30" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" SelectionChanged="comboBox2_SelectionChanged" IsReadOnly="True" IsEditable="True">
+        <ComboBox x:Name="comboBox2" ItemsSource="{Binding ListOfTypes}" HorizontalAlignment="Center" Margin="0,190,0,0" VerticalAlignment="Top" Width="616" Height="30" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" SelectionChanged="ComboBox2_SelectionChanged" IsReadOnly="True" IsEditable="True">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#FFF0F0F0"/>

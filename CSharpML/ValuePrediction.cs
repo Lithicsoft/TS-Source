@@ -48,7 +48,7 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             _trainDataPath = $"projects\\{projectName}\\datasets\\dataset.csv";
             _modelPath = $"projects\\{projectName}\\outputs\\model.zip";
 
-            MLContext mlContext = new MLContext(seed: 0);
+            MLContext mlContext = new(seed: 0);
             var model = Train(mlContext, _trainDataPath);
         }
 

@@ -18,7 +18,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
     /// </summary>
     public partial class ConfigModel : Page
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public ConfigModel(string name)
         {
@@ -27,8 +27,8 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             projectName = name;
         }
 
-        private ObservableCollection<VariableSelection> items;
-        private Dictionary<string, string> trainParameters;
+        private ObservableCollection<VariableSelection>? items;
+        private Dictionary<string, string>? trainParameters;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -36,7 +36,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             {
                 trainParameters = (Dictionary<string, string>)DotEnv.Load($"projects\\{projectName}\\.env");
 
-                items = new ObservableCollection<VariableSelection>();
+                items = [];
 
                 foreach (var kvp in trainParameters)
                 {
@@ -56,13 +56,22 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
         {
             try
             {
-                foreach (var item in items)
+                if (items != null)
                 {
-                    trainParameters[item.Variable] = item.Value;
+                    foreach (var item in items)
+                    {
+                        if (trainParameters != null && item.Variable != null && item.Value != null)
+                        {
+                            trainParameters[item.Variable] = item.Value;
+                        }
+                    }
                 }
 
-                DotEnv.Save($"projects\\{projectName}\\.env", trainParameters);
-                MessageBox.Show("All changes have been saved.", "Saving Config", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (trainParameters != null)
+                {
+                    DotEnv.Save($"projects\\{projectName}\\.env", trainParameters);
+                    MessageBox.Show("All changes have been saved.", "Saving Config", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             catch (Exception ex)
             {
@@ -72,8 +81,8 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
 
         public class VariableSelection
         {
-            public string Variable { get; set; }
-            public string Value { get; set; }
+            public string? Variable { get; set; }
+            public string? Value { get; set; }
         }
     }
 
@@ -85,7 +94,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
 
             foreach (var line in File.ReadAllLines(filePath))
             {
-                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#"))
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith('#'))
                     continue;
 
                 var parts = line.Split('=', 2);

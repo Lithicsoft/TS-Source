@@ -15,7 +15,7 @@ namespace Lithicsoft_Trainer_Studio.Python
     /// </summary>
     public partial class Python : UserControl
     {
-        private string projectName = string.Empty;
+        private readonly string projectName = string.Empty;
 
         public Python(string name)
         {
