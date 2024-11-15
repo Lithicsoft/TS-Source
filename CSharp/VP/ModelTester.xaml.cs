@@ -11,6 +11,7 @@ using Microsoft.ML.Data;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Tensorflow;
 
 namespace Lithicsoft_Trainer_Studio.CSharp.VP
 {
@@ -43,6 +44,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             }
         }
 
+        ModelOutput prediction;
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             button1.IsEnabled = false;
@@ -60,9 +62,10 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                         D = float.Parse(ValueD.Text)
                     };
 
-                    var prediction = predictionEngine.Predict(sampleInput);
-
-                    label1.Content = "Predict: " + prediction.Prediction;
+                    if (predictionEngine != null)
+                    {
+                        var prediction = predictionEngine.Predict(sampleInput);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -70,6 +73,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                 }
             });
 
+            label1.Content = "Predict: " + prediction.Prediction;
             button1.IsEnabled = true;
         }
 

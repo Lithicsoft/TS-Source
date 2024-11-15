@@ -10,7 +10,7 @@
 
     <Grid>
         <Image x:Name="image1" HorizontalAlignment="Left" Height="329" Margin="10,10,0,0" VerticalAlignment="Top" Width="329" OpacityMask="Black" Stretch="Fill"/>
-        <Button x:Name="button1" Content="Choose Image" HorizontalAlignment="Left" Margin="10,350,0,0" Height="30" VerticalAlignment="Top" Foreground="White" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False"/>
+        <Button x:Name="button1" Content="Choose Image" HorizontalAlignment="Left" Margin="10,350,0,0" Height="30" VerticalAlignment="Top" Foreground="White" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False" Width="100"/>
         <Label x:Name="label1" Content="Predict: None" HorizontalAlignment="Left" Margin="352,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
 
     </Grid>

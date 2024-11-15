@@ -9,7 +9,7 @@
       Title="ModelTester" Loaded="Page_Loaded">
 
     <Grid>
-        <Button x:Name="button1" Content="Run test" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False" Width="70" Height="30"/>
+        <Button x:Name="button1" Content="Run test" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False" Width="100" Height="30"/>
 
     </Grid>
 </Page>

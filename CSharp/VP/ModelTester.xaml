@@ -9,7 +9,7 @@
       Title="ModelTester" Loaded="Page_Loaded">
 
     <Grid>
-        <Button x:Name="button1" Content="Predict" HorizontalAlignment="Left" Margin="363,36,0,0" VerticalAlignment="Top" Foreground="#FFEAEAF2" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False" Width="60" Height="30"/>
+        <Button x:Name="button1" Content="Predict" HorizontalAlignment="Left" Margin="352,36,0,0" VerticalAlignment="Top" Foreground="#FFEAEAF2" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False" Width="82" Height="30"/>
         <Label x:Name="label1" Content="Predict: None" HorizontalAlignment="Left" Margin="352,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
         <Label Content="A" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
         <Label Content="B" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>

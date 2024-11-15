@@ -41,28 +41,30 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             }
         }
 
+        ImagePrediction prediction;
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             button1.IsEnabled = false;
+
+            OpenFileDialog openFileDialog = new()
+            {
+                Filter = "Image files (*.png, *.jpg, *.webp)|*.png;*.jpg;*.webp"
+            };
+            Nullable<bool> result = openFileDialog.ShowDialog();
+
+            BitmapImage bitmap = new();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(openFileDialog.FileName, UriKind.Absolute);
+            bitmap.EndInit();
+
+            image1.Source = bitmap;
 
             await Task.Run(() =>
             {
                 try
                 {
-                    OpenFileDialog openFileDialog = new()
-                    {
-                        Filter = "Image files (*.png, *.jpg, *.webp)|*.png;*.jpg;*.webp"
-                    };
-                    Nullable<bool> result = openFileDialog.ShowDialog();
                     if (result == true)
                     {
-                        BitmapImage bitmap = new();
-                        bitmap.BeginInit();
-                        bitmap.UriSource = new Uri(openFileDialog.FileName, UriKind.Absolute);
-                        bitmap.EndInit();
-
-                        image1.Source = bitmap;
-
                         InitModel();
                         var imageData = new ImageData()
                         {
@@ -71,17 +73,17 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
 
                         if (predictionEngine != null)
                         {
-                            var prediction = predictionEngine.Predict(imageData);
-                            label1.Content = "Predict: " + prediction.PredictedLabelValue;
+                            prediction = predictionEngine.Predict(imageData);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error opening zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error running model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
 
+            label1.Content = "Predict: " + prediction.PredictedLabelValue;
             button1.IsEnabled = true;
         }
 
