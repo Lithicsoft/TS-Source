@@ -14,7 +14,7 @@
             <Button Content="Test trained model" Margin="0, 10, 0, 0" Background="#FF5D6B99" Foreground="White" BorderBrush="White" Width="130" Height="30" Click="Button_Click_3"/>
             <Button Content="Use it in your app" Margin="0, 10, 0, 0" Background="#FF5D6B99" BorderBrush="White" Foreground="White" Width="130" Height="30" Click="Button_Click_4"/>
         </StackPanel>
-        <Frame x:Name="MainFrame" Content="Welcome to the Trainer! Now go step by step to create your own model!" Margin="145,0,0,0" NavigationUIVisibility="Hidden" Foreground="#FF0078D7" FontSize="16"/>
+        <Frame x:Name="MainFrame" Content="Welcome to the Trainer! Now go step by step to create your own model!" NavigationUIVisibility="Hidden" Foreground="#FF0078D7" FontSize="16" HorizontalAlignment="Right" Width="665"/>
 
     </Grid>
 </UserControl>
