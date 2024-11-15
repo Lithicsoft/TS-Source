@@ -9,6 +9,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -78,11 +79,15 @@ namespace Lithicsoft_Trainer_Studio.UserControls
                 {
                     string zipFile = "inception\\inception5h.zip";
 
-                    using (var client = new WebClient())
+                    using (HttpClient client = new())
                     {
                         try
                         {
-                            await client.DownloadFileTaskAsync(new Uri("https://storage.googleapis.com/download.tensorflow.org/models/inception5h.zip"), zipFile);
+                            HttpResponseMessage response = await client.GetAsync(new Uri("https://storage.googleapis.com/download.tensorflow.org/models/inception5h.zip"));
+                            response.EnsureSuccessStatusCode();
+
+                            using FileStream fs = new(zipFile, FileMode.Create, FileAccess.Write, FileShare.None);
+                            await response.Content.CopyToAsync(fs);
                         }
                         catch (WebException ex)
                         {
@@ -107,11 +112,15 @@ namespace Lithicsoft_Trainer_Studio.UserControls
                 {
                     string zipFile = "sentiment_model.zip";
 
-                    using (var client = new WebClient())
+                    using (HttpClient client = new())
                     {
                         try
                         {
-                            await client.DownloadFileTaskAsync(new Uri("https://github.com/dotnet/samples/blob/main/machine-learning/models/textclassificationtf/sentiment_model.zip?raw=true"), zipFile);
+                            HttpResponseMessage response = await client.GetAsync(new Uri("https://github.com/dotnet/samples/blob/main/machine-learning/models/textclassificationtf/sentiment_model.zip?raw=true"));
+                            response.EnsureSuccessStatusCode();
+
+                            using FileStream fs = new(zipFile, FileMode.Create, FileAccess.Write, FileShare.None);
+                            await response.Content.CopyToAsync(fs);
                         }
                         catch (WebException ex)
                         {

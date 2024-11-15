@@ -37,7 +37,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls
             }
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void Button1_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls
             }
         }
 
-        private void button4_Click(object sender, RoutedEventArgs e)
+        private void Button4_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -67,8 +67,10 @@ namespace Lithicsoft_Trainer_Studio.UserControls
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Zip files (*.zip)|*.zip";
+                OpenFileDialog openFileDialog = new()
+                {
+                    Filter = "Zip files (*.zip)|*.zip"
+                };
                 Nullable<bool> result = openFileDialog.ShowDialog();
                 if (result == true)
                 {

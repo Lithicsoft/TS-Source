@@ -80,7 +80,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                         RedirectStandardOutput = false
                     };
 
-                    Process process = Process.Start(start);
+                    Process.Start(start);
                 }
                 catch (Exception ex)
                 {

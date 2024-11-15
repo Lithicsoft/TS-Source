@@ -23,7 +23,7 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
 
         private static string projectName = string.Empty;
 
-        public void Train(string name)
+        public static void Train(string name)
         {
             projectName = name;
 
@@ -33,12 +33,12 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             _testTagsTsv = Path.Combine(_imagesFolder, "test-tags.tsv");
             _inceptionTensorFlowModel = Path.Combine("inception", "tensorflow_inception_graph.pb");
 
-            MLContext mlContext = new MLContext();
+            MLContext mlContext = new();
 
-            ITransformer model = GenerateModel(mlContext);
+            GenerateModel(mlContext);
         }
 
-        public void DataPrepare(string rootPath, string projectName)
+        public static void DataPrepare(string rootPath, string projectName)
         {
             var directories = Directory.GetDirectories(rootPath);
 
@@ -70,14 +70,13 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             File.WriteAllText(testTagsPath, tsvContent);
         }
 
-
         public static ITransformer GenerateModel(MLContext mlContext)
         {
-            IEstimator<ITransformer> pipeline = mlContext.Transforms.LoadImages(outputColumnName: "input", imageFolder: _imagesFolder, inputColumnName: nameof(ImageData.ImagePath))
+            EstimatorChain<Microsoft.ML.Transforms.KeyToValueMappingTransformer> pipeline = mlContext.Transforms.LoadImages(outputColumnName: "input", imageFolder: _imagesFolder, inputColumnName: nameof(ImageData.ImagePath))
                             .Append(mlContext.Transforms.ResizeImages(outputColumnName: "input", imageWidth: InceptionSettings.ImageWidth, imageHeight: InceptionSettings.ImageHeight, inputColumnName: "input"))
                             .Append(mlContext.Transforms.ExtractPixels(outputColumnName: "input", interleavePixelColors: InceptionSettings.ChannelsLast, offsetImage: InceptionSettings.Mean))
                             .Append(mlContext.Model.LoadTensorFlowModel(_inceptionTensorFlowModel).
-                                ScoreTensorFlowModel(outputColumnNames: new[] { "softmax2_pre_activation" }, inputColumnNames: new[] { "input" }, addBatchDimensionInput: true))
+                                ScoreTensorFlowModel(outputColumnNames: ["softmax2_pre_activation"], inputColumnNames: ["input"], addBatchDimensionInput: true))
                             .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "LabelKey", inputColumnName: "Label"))
                             .Append(mlContext.MulticlassClassification.Trainers.LbfgsMaximumEntropy(labelColumnName: "LabelKey", featureColumnName: "softmax2_pre_activation"))
                             .Append(mlContext.Transforms.Conversion.MapKeyToValue("PredictedLabelValue", "PredictedLabel"))
@@ -85,17 +84,16 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
 
             IDataView trainingData = mlContext.Data.LoadFromTextFile<ImageData>(path: _trainTagsTsv, hasHeader: false);
 
-            ITransformer model = pipeline.Fit(trainingData);
+            TransformerChain<Microsoft.ML.Transforms.KeyToValueMappingTransformer> model = pipeline.Fit(trainingData);
 
             IDataView testData = mlContext.Data.LoadFromTextFile<ImageData>(path: _testTagsTsv, hasHeader: false);
             IDataView predictions = model.Transform(testData);
 
-            IEnumerable<ImagePrediction> imagePredictionData = mlContext.Data.CreateEnumerable<ImagePrediction>(predictions, true);
+            mlContext.Data.CreateEnumerable<ImagePrediction>(predictions, true);
 
-            MulticlassClassificationMetrics metrics =
-                mlContext.MulticlassClassification.Evaluate(predictions,
-                  labelColumnName: "LabelKey",
-                  predictedLabelColumnName: "PredictedLabel");
+            mlContext.MulticlassClassification.Evaluate(predictions,
+              labelColumnName: "LabelKey",
+              predictedLabelColumnName: "PredictedLabel");
 
             mlContext.Model.Save(model, trainingData.Schema, $"projects\\{projectName}\\outputs\\model.zip");
             using FileStream stream = File.Create($"projects\\{projectName}\\outputs\\onnx_model.onnx");

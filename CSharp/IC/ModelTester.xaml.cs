@@ -41,7 +41,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             }
         }
 
-        ImagePrediction prediction;
+        ImagePrediction? prediction;
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             button1.IsEnabled = false;
@@ -83,7 +83,10 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                 }
             });
 
-            label1.Content = "Predict: " + prediction.PredictedLabelValue;
+            if (prediction != null)
+            {
+                label1.Content = "Predict: " + prediction.PredictedLabelValue;
+            }
             button1.IsEnabled = true;
         }
 

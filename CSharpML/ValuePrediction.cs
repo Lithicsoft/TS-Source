@@ -37,10 +37,10 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             public float Prediction { get; set; }
         }
 
-        static string _trainDataPath;
-        static string _modelPath;
+        static string? _trainDataPath;
+        static string? _modelPath;
 
-        private string projectName;
+        private string? projectName;
 
         public void Train(string name)
         {
@@ -49,10 +49,10 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             _modelPath = $"projects\\{projectName}\\outputs\\model.zip";
 
             MLContext mlContext = new(seed: 0);
-            var model = Train(mlContext, _trainDataPath);
+            Train(mlContext, _trainDataPath);
         }
-
-        static ITransformer Train(MLContext mlContext, string dataPath)
+        
+        private static TransformerChain<RegressionPredictionTransformer<Microsoft.ML.Trainers.FastTree.FastTreeRegressionModelParameters>> Train(MLContext mlContext, string dataPath)
         {
             IDataView dataView = mlContext.Data.LoadFromTextFile<ModelInput>(dataPath, hasHeader: true, separatorChar: ',');
 

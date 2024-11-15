@@ -23,8 +23,6 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             InitializeComponent();
         }
 
-        public event EventHandler? PageClosed;
-
         private void Manager_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateProjectList();
@@ -67,11 +65,11 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             {
                 if (listView1.SelectedItems.Count > 0)
                 {
-                    ProjectItems selectedProject = (ProjectItems)listView1.SelectedItems[0];
+                    ProjectItems? selectedProject = listView1.SelectedItems[0] as ProjectItems;
 
-                    string projectName = selectedProject.ProjectName;
-                    string projectLanguage = selectedProject.ProjectLanguage;
-                    string projectType = selectedProject.ProjectType;
+                    string? projectName = selectedProject?.ProjectName;
+                    string? projectLanguage = selectedProject?.ProjectLanguage;
+                    string? projectType = selectedProject?.ProjectType;
 
                     if (!string.IsNullOrEmpty(projectName) && !string.IsNullOrEmpty(projectLanguage) && !string.IsNullOrEmpty(projectType))
                     {

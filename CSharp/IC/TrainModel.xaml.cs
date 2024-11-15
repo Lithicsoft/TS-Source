@@ -73,7 +73,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                 try
                 {
                     CSharpML.ImageClassification imageClassification = new();
-                    imageClassification.Train(projectName);
+                    CSharpML.ImageClassification.Train(projectName);
                 }
                 catch (Exception ex)
                 {

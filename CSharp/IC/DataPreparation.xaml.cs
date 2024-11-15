@@ -73,12 +73,17 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                 try
                 {
                     using ZipArchive archive = ZipFile.OpenRead(path);
-                    var validExtensions = new[] { ".png", ".jpg", ".webp" };
+                    string[] strings = [".png", ".jpg", ".webp"];
+                    var validExtensions = strings;
 
                     bool isValid = archive.Entries
-                        .Where(e => !string.IsNullOrEmpty(Path.GetDirectoryName(e.FullName)))
-                        .GroupBy(e => Path.GetDirectoryName(e.FullName))
-                        .All(g => g.Any(e => validExtensions.Contains(Path.GetExtension(e.FullName))));
+                        .Where(e =>
+                            !string.IsNullOrEmpty(e.FullName) &&
+                            !string.IsNullOrEmpty(Path.GetDirectoryName(e.FullName)) &&
+                            !string.IsNullOrEmpty(Path.GetExtension(e.FullName))
+                        )
+                        .GroupBy(e => Path.GetDirectoryName(e.FullName) ?? string.Empty)
+                        .All(g => g.Any(e => validExtensions.Contains(Path.GetExtension(e.FullName) ?? string.Empty)));
 
                     if (!isValid)
                     {
@@ -104,7 +109,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                         string extractPath = $"projects\\{projectName}\\datasets";
                         ZipFile.ExtractToDirectory(path, extractPath);
                         CSharpML.ImageClassification imageClassification = new();
-                        imageClassification.DataPrepare($"projects\\{projectName}\\datasets", projectName);
+                        CSharpML.ImageClassification.DataPrepare($"projects\\{projectName}\\datasets", projectName);
                     }
                     catch (Exception ex)
                     {

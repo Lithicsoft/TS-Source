@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Management;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -87,7 +88,8 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             {
                 try
                 {
-                    if (ProjectName != null && ProjectLanguage != null && ProjectType != null) {
+                    if (ProjectName != null && ProjectLanguage != null && ProjectType != null)
+                    {
                         Directory.CreateDirectory($"projects\\{ProjectName}");
                         await File.WriteAllLinesAsync($"projects\\{ProjectName}\\{ProjectName}.project", [ProjectLanguage, ProjectType]);
                         Directory.CreateDirectory($"projects\\{ProjectName}\\outputs");
@@ -118,13 +120,17 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                 Trainer trainer = new(ProjectName, ProjectLanguage, ProjectType);
                 trainer.Show();
             }
-            
+
             Creator.Instance.isCreating = false;
         }
 
         private async Task PythonSetup()
         {
-            await InstallPackageDependencies(comboBox1.SelectedItem.ToString());
+            var ProjectType = comboBox2.SelectedItem?.ToString();
+            if (!string.IsNullOrEmpty(ProjectType))
+            {
+                await InstallPackageDependencies(ProjectType);
+            }
         }
 
         private static bool GetCheckForDiscreteGPU()
@@ -167,9 +173,10 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
         {
             ArgumentNullException.ThrowIfNull(language);
 
-            if (!string.IsNullOrEmpty(comboBox2.SelectedItem.ToString()))
+            var ProjectType = comboBox2.SelectedItem?.ToString();
+            if (!string.IsNullOrEmpty(ProjectType))
             {
-                await DownloadKitFiles(textBox1.Text, comboBox2.SelectedItem.ToString(), GetCheckForDiscreteGPU());
+                await DownloadKitFiles(textBox1.Text, ProjectType, GetCheckForDiscreteGPU());
             }
 
             try
@@ -184,7 +191,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     RedirectStandardOutput = false
                 };
 
-                Process process = Process.Start(start);
+                Process.Start(start);
             }
             catch (Exception ex)
             {
@@ -203,20 +210,28 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
             try
             {
-                using var client = new WebClient();
+                using HttpClient client = new();
+
+                async Task DownloadFileAsync(string sourceUrl, string destinationPath)
+                {
+                    HttpResponseMessage response = await client.GetAsync(sourceUrl);
+                    response.EnsureSuccessStatusCode();
+
+                    using FileStream fs = new(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None);
+                    await response.Content.CopyToAsync(fs);
+                }
 
                 var baseUri = $"https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/main/{pythonTrainerKit[projectType]}/";
-                if (usingGPU)
+                string requirementsFile = usingGPU ? "requirements-gpu.txt" : "requirements-cpu.txt";
+                string projectBasePath = $"projects\\{projectPath}\\";
+
+                await DownloadFileAsync(baseUri + requirementsFile, projectBasePath + "requirements.txt");
+
+                string[] filesToDownload = ["trainer.py", "tester.py", ".env"];
+                foreach (var file in filesToDownload)
                 {
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements-gpu.txt"), $"projects\\{projectPath}\\requirements.txt");
+                    await DownloadFileAsync(baseUri + file, projectBasePath + file);
                 }
-                else
-                {
-                    await client.DownloadFileTaskAsync(new Uri(baseUri + "requirements-cpu.txt"), $"projects\\{projectPath}\\requirements.txt");
-                }
-                await client.DownloadFileTaskAsync(new Uri(baseUri + "trainer.py"), $"projects\\{projectPath}\\trainer.py");
-                await client.DownloadFileTaskAsync(new Uri(baseUri + "tester.py"), $"projects\\{projectPath}\\tester.py");
-                await client.DownloadFileTaskAsync(new Uri(baseUri + ".env"), $"projects\\{projectPath}\\.env");
             }
             catch (WebException ex)
             {
@@ -282,10 +297,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                 }
             }
 
-            public ViewModelType()
-            {
-                ListOfTypes = [];
-            }
+            public ViewModelType() => ListOfTypes = [];
 
             public void UpdateListOfTypes(ComboBox comboBox1)
             {

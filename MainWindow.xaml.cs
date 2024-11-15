@@ -58,7 +58,7 @@ namespace Lithicsoft_Trainer_Studio
             }
         }
 
-        private Task WaitForUserControlToCloseAsync(Startup userControl)
+        private Task<bool> WaitForUserControlToCloseAsync(Startup userControl)
         {
             var tcs = new TaskCompletionSource<bool>();
             void handler(object? s, EventArgs e)
