@@ -16,7 +16,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
     /// <summary>
     /// Interaction logic for TrainModel.xaml
     /// </summary>
-    
+
     public partial class TrainModel : Page
     {
         private readonly string projectName = string.Empty;

@@ -73,8 +73,11 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     string projectLanguage = selectedProject.ProjectLanguage;
                     string projectType = selectedProject.ProjectType;
 
-                    Trainer trainer = new(projectName, projectLanguage, projectType);
-                    trainer.Show();
+                    if (!string.IsNullOrEmpty(projectName) && !string.IsNullOrEmpty(projectLanguage) && !string.IsNullOrEmpty(projectType))
+                    {
+                        Trainer trainer = new(projectName, projectLanguage, projectType);
+                        trainer.Show();
+                    }
 
                     Window parentWindow = Window.GetWindow(this);
                     parentWindow?.Hide();
@@ -89,10 +92,10 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
     public class ProjectItems
     {
-        public string ProjectName { get; set; }
+        public string? ProjectName { get; set; }
 
-        public string ProjectLanguage { get; set; }
+        public string? ProjectLanguage { get; set; }
 
-        public string ProjectType { get; set; }
+        public string? ProjectType { get; set; }
     }
 }

@@ -99,7 +99,7 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
 
             mlContext.Model.Save(model, trainingData.Schema, $"projects\\{projectName}\\outputs\\model.zip");
             using FileStream stream = File.Create($"projects\\{projectName}\\outputs\\onnx_model.onnx");
-            
+
             return model;
         }
 

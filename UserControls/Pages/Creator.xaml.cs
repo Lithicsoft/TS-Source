@@ -11,7 +11,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Management;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -30,10 +29,10 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             InitializeComponent();
         }
 
-        public event EventHandler PageClosed;
+        public event EventHandler? PageClosed;
 
-        private ViewModelType viewModelType;
-        private ViewModel viewModel;
+        private ViewModelType? viewModelType;
+        private ViewModel? viewModel;
 
         private static Creator? _instance;
         public bool isCreating = false;
@@ -81,16 +80,18 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             await Task.Delay(1000);
 
             string ProjectName = textBox1.Text.Replace("\"", "").Replace("&", "").Replace("|", "").Replace(";", "");
-            string ProjectLanguage = comboBox1.SelectedItem.ToString();
-            string ProjectType = comboBox2.SelectedItem.ToString();
+            string? ProjectLanguage = comboBox1.SelectedItem.ToString();
+            string? ProjectType = comboBox2.SelectedItem.ToString();
 
             await Task.Run(async () =>
             {
                 try
                 {
-                    Directory.CreateDirectory($"projects\\{ProjectName}");
-                    await File.WriteAllLinesAsync($"projects\\{ProjectName}\\{ProjectName}.project", [ProjectLanguage, ProjectType]);
-                    Directory.CreateDirectory($"projects\\{ProjectName}\\outputs");
+                    if (ProjectName != null && ProjectLanguage != null && ProjectType != null) {
+                        Directory.CreateDirectory($"projects\\{ProjectName}");
+                        await File.WriteAllLinesAsync($"projects\\{ProjectName}\\{ProjectName}.project", [ProjectLanguage, ProjectType]);
+                        Directory.CreateDirectory($"projects\\{ProjectName}\\outputs");
+                    }
 
                     if (ProjectLanguage != "CSharp")
                     {
@@ -111,12 +112,14 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                 }
             });
 
-            Trainer trainer = new(textBox1.Text, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
             loadingWindow.Hide();
-            trainer.Show();      
-
+            if (ProjectName != null && ProjectLanguage != null && ProjectType != null)
+            {
+                Trainer trainer = new(ProjectName, ProjectLanguage, ProjectType);
+                trainer.Show();
+            }
+            
             Creator.Instance.isCreating = false;
-
         }
 
         private async Task PythonSetup()
@@ -135,14 +138,14 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
                 foreach (ManagementObject mo in moc.Cast<ManagementObject>())
                 {
-                    string adapterCompatibility = mo["AdapterCompatibility"]?.ToString();
-                    string description = mo["Description"]?.ToString();
+                    string? adapterCompatibility = mo["AdapterCompatibility"]?.ToString();
+                    string? description = mo["Description"]?.ToString();
 
                     if (adapterCompatibility != null &&
                         (adapterCompatibility.Contains("NVIDIA") || adapterCompatibility.Contains("AMD")))
                     {
                         discreteGPUFound = true;
-                        string gpuName = mo["Name"]?.ToString();
+                        string? gpuName = mo["Name"]?.ToString();
                     }
                 }
 
@@ -164,7 +167,10 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
         {
             ArgumentNullException.ThrowIfNull(language);
 
-            await DownloadKitFiles(textBox1.Text, comboBox2.SelectedItem.ToString(), GetCheckForDiscreteGPU());
+            if (!string.IsNullOrEmpty(comboBox2.SelectedItem.ToString()))
+            {
+                await DownloadKitFiles(textBox1.Text, comboBox2.SelectedItem.ToString(), GetCheckForDiscreteGPU());
+            }
 
             try
             {
@@ -238,7 +244,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
         private void ComboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            viewModelType.UpdateListOfTypes(comboBox1);
+            viewModelType?.UpdateListOfTypes(comboBox1);
 
             CheckStation();
         }
@@ -288,7 +294,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
                 if (comboBox1.SelectedItem != null)
                 {
-                    string selectedItem = comboBox1.SelectedItem.ToString();
+                    string? selectedItem = comboBox1.SelectedItem.ToString();
 
                     if (selectedItem == "CSharp")
                     {
@@ -310,9 +316,9 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                 ListOfTypes = createAble ? items : [];
             }
 
-            public event PropertyChangedEventHandler PropertyChanged;
+            public event PropertyChangedEventHandler? PropertyChanged;
 
-            protected void OnPropertyChanged([CallerMemberName] string name = null)
+            protected void OnPropertyChanged([CallerMemberName] string? name = null)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             }

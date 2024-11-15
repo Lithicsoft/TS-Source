@@ -24,7 +24,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls
             InitializeComponent();
         }
 
-        public event EventHandler UserControlClosed;
+        public event EventHandler? UserControlClosed;
 
         private void Startup_Loaded(object sender, RoutedEventArgs e)
         {
@@ -45,7 +45,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls
             OnUserControlClosed();
         }
 
-        private async Task InitializeAsync()
+        private static async Task InitializeAsync()
         {
             CreateProjectsFolder();
             await CheckAndDownloadFilesAsync();
@@ -56,7 +56,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls
             UserControlClosed?.Invoke(this, EventArgs.Empty);
         }
 
-        private void CreateProjectsFolder()
+        private static void CreateProjectsFolder()
         {
             if (!Directory.Exists("projects"))
             {
@@ -64,7 +64,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls
             }
         }
 
-        private async Task CheckAndDownloadFilesAsync()
+        private static async Task CheckAndDownloadFilesAsync()
         {
             try
             {
@@ -131,10 +131,10 @@ namespace Lithicsoft_Trainer_Studio.UserControls
                     }
                 }
 
-                string[] filesToDelete = {
+                string[] filesToDelete = [
                     "inception\\inception5h.zip",
                     "sentiment_model.zip",
-                };
+                ];
 
                 foreach (string filePath in filesToDelete)
                 {
