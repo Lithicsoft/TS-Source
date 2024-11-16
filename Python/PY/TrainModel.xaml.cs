@@ -72,6 +72,11 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             {
                 try
                 {
+                    if (!Directory.Exists($"projects\\{projectName}\\outputs"))
+                    {
+                        Directory.CreateDirectory($"projects\\{projectName}\\outputs");
+                    }
+
                     ProcessStartInfo start = new()
                     {
                         FileName = $"cmd.exe",

@@ -72,6 +72,11 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             {
                 try
                 {
+                    if (!Directory.Exists($"projects\\{projectName}\\outputs"))
+                    {
+                        Directory.CreateDirectory($"projects\\{projectName}\\outputs");
+                    }
+
                     CSharpML.ImageClassification imageClassification = new();
                     CSharpML.ImageClassification.Train(projectName);
                 }

@@ -71,6 +71,11 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             {
                 try
                 {
+                    if (!Directory.Exists($"projects\\{projectName}\\outputs"))
+                    {
+                        Directory.CreateDirectory($"projects\\{projectName}\\outputs");
+                    }
+
                     CSharpML.ValuePrediction valuePrediction = new();
                     valuePrediction.Train(projectName);
                 }
