@@ -40,25 +40,25 @@
     <Compile Update="CSharp\ValuePrediction.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CSharp\VP\DataPreparation.xaml.cs">
+    <Compile Update="CSharp\VP\PrepareDataset.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="CSharp\VP\ModelResult.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CSharp\VP\ModelTester.xaml.cs">
+    <Compile Update="CSharp\VP\TestModel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="CSharp\VP\TrainModel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Python\PY\DataPreparation.xaml.cs">
+    <Compile Update="Python\PY\PrepareDataset.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Python\PY\ModelResult.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Python\PY\ModelTester.xaml.cs">
+    <Compile Update="Python\PY\TestModel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Python\PY\TrainModel.xaml.cs">
@@ -70,13 +70,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="CSharp\VP\DataPreparation.xaml">
+    <Page Update="CSharp\VP\PrepareDataset.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CSharp\VP\ModelResult.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CSharp\VP\ModelTester.xaml">
+    <Page Update="CSharp\VP\TestModel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CSharp\VP\TrainModel.xaml">

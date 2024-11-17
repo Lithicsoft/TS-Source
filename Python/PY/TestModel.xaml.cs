@@ -1,6 +1,6 @@
 ﻿// License: Apache-2.0
 /*
- * Python/PY/ModelTester.xaml.cs: Back-end source code for model tester image classification page
+ * Python/PY/TestModel.xaml.cs: Back-end source code for model tester image classification page
  *
  * (C) Copyright 2024 Lithicsoft Organization
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
@@ -14,13 +14,13 @@ using System.Windows.Controls;
 namespace Lithicsoft_Trainer_Studio.Python.PY
 {
     /// <summary>
-    /// Interaction logic for ModelTester.xaml
+    /// Interaction logic for TestModel.xaml
     /// </summary>
-    public partial class ModelTester : Page
+    public partial class TestModel : Page
     {
         private readonly string projectName = string.Empty;
 
-        public ModelTester(string name)
+        public TestModel(string name)
         {
             InitializeComponent();
 

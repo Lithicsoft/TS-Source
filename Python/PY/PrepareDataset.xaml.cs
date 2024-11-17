@@ -1,6 +1,6 @@
 ﻿// License: Apache-2.0
 /*
- * Python/PY/DataPreparation.xaml.cs: Back-end source code for data prepare python page
+ * Python/PY/PrepareDataset.xaml.cs: Back-end source code for data prepare python page
  *
  * (C) Copyright 2024 Lithicsoft Organization
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
@@ -16,13 +16,13 @@ using System.Windows.Controls;
 namespace Lithicsoft_Trainer_Studio.Python.PY
 {
     /// <summary>
-    /// Interaction logic for DataPreparation.xaml
+    /// Interaction logic for PrepareDataset.xaml
     /// </summary>
-    public partial class DataPreparation : Page
+    public partial class PrepareDataset : Page
     {
         private readonly string projectName = string.Empty;
 
-        public DataPreparation(string name)
+        public PrepareDataset(string name)
         {
             InitializeComponent();
 

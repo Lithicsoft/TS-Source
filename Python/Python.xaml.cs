@@ -26,7 +26,7 @@ namespace Lithicsoft_Trainer_Studio.Python
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainFrame.Content = new PY.DataPreparation(projectName);
+            MainFrame.Content = new PY.PrepareDataset(projectName);
         }
 
         private void Button_Click1(object sender, System.Windows.RoutedEventArgs e)
@@ -41,7 +41,7 @@ namespace Lithicsoft_Trainer_Studio.Python
 
         private void Button_Click_3(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainFrame.Content = new PY.ModelTester(projectName);
+            MainFrame.Content = new PY.TestModel(projectName);
         }
 
         private void Button_Click_4(object sender, System.Windows.RoutedEventArgs e)

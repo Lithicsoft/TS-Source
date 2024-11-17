@@ -26,7 +26,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainFrame.Content = new VP.DataPreparation(projectName);
+            MainFrame.Content = new VP.PrepareDataset(projectName);
         }
 
         private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
@@ -36,7 +36,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp
 
         private void Button_Click_2(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainFrame.Content = new VP.ModelTester(projectName);
+            MainFrame.Content = new VP.TestModel(projectName);
         }
 
         private void Button_Click_3(object sender, System.Windows.RoutedEventArgs e)

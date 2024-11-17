@@ -1,6 +1,6 @@
 ﻿// License: Apache-2.0
 /*
- * CSharp/IC/DataPreparation.xaml.cs: Back-end source code for data prepare image classification page
+ * CSharp/VP/PrepareDataset.xaml.cs: Back-end source code for data prepare value prediction page
  *
  * (C) Copyright 2024 Lithicsoft Organization
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
@@ -9,20 +9,19 @@
 using Lithicsoft_Trainer_Studio.Utils;
 using Microsoft.Win32;
 using System.IO;
-using System.IO.Compression;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Lithicsoft_Trainer_Studio.CSharp.IC
+namespace Lithicsoft_Trainer_Studio.CSharp.VP
 {
     /// <summary>
-    /// Interaction logic for DataPreparation.xaml
+    /// Interaction logic for PrepareDataset.xaml
     /// </summary>
-    public partial class DataPreparation : Page
+    public partial class PrepareDataset : Page
     {
         private readonly string projectName = string.Empty;
 
-        public DataPreparation(string name)
+        public PrepareDataset(string name)
         {
             InitializeComponent();
 
@@ -35,7 +34,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             {
                 OpenFileDialog openFileDialog = new()
                 {
-                    Filter = "Zip files (*.zip)|*.zip"
+                    Filter = "Csv files (*.csv)|*.csv"
                 };
                 Nullable<bool> result = openFileDialog.ShowDialog();
                 if (result == true)
@@ -72,28 +71,15 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             {
                 try
                 {
-                    using ZipArchive archive = ZipFile.OpenRead(path);
-                    string[] strings = [".png", ".jpg", ".webp"];
-                    var validExtensions = strings;
-
-                    bool isValid = archive.Entries
-                        .Where(e =>
-                            !string.IsNullOrEmpty(e.FullName) &&
-                            !string.IsNullOrEmpty(Path.GetDirectoryName(e.FullName)) &&
-                            !string.IsNullOrEmpty(Path.GetExtension(e.FullName))
-                        )
-                        .GroupBy(e => Path.GetDirectoryName(e.FullName) ?? string.Empty)
-                        .All(g => g.Any(e => validExtensions.Contains(Path.GetExtension(e.FullName) ?? string.Empty)));
-
-                    if (!isValid)
+                    if (CheckCsvFormat(path))
                     {
-                        MessageBox.Show("The zip structure is invalid", "Dataset Structure", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("The csv structure is invalid", "Dataset Structure", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error checking zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error checking csv file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -106,23 +92,17 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                             Directory.Delete($"projects\\{projectName}\\datasets", true);
                         }
                         Directory.CreateDirectory($"projects\\{projectName}\\datasets");
-                        string extractPath = $"projects\\{projectName}\\datasets";
-                        ZipFile.ExtractToDirectory(path, extractPath);
-                        CSharpML.ImageClassification imageClassification = new();
-                        CSharpML.ImageClassification.DataPrepare($"projects\\{projectName}\\datasets", projectName);
+                        File.Copy(path, $"projects\\{projectName}\\datasets\\dataset.csv");
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
                     }
                 }
                 else
                 {
                     MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
                 }
-
             });
 
             parentWindow?.Show();
@@ -130,6 +110,36 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
 
             button1.IsEnabled = true;
             textBox1.IsEnabled = true;
+        }
+
+        private static bool CheckCsvFormat(string filePath)
+        {
+            var lines = File.ReadAllLines(filePath);
+
+            if (lines.Length == 0)
+            {
+                return false;
+            }
+
+            foreach (var line in lines)
+            {
+                var columns = line.Split(',');
+
+                if (columns.Length != 5)
+                {
+                    return false;
+                }
+
+                for (int cloumn = 0; cloumn < columns.Length; cloumn++)
+                {
+                    if (!float.TryParse(columns[cloumn], out _))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

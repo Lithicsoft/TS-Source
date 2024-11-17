@@ -12,7 +12,7 @@
     <Compile Update="CSharp\IC\ModelResult.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CSharp\IC\ModelTester.xaml.cs">
+    <Compile Update="CSharp\IC\TestModel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="CSharp\IC\TrainModel.xaml.cs">
@@ -21,7 +21,7 @@
     <Compile Update="CSharp\ImageClassification.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CSharp\IC\DataPreparation.xaml.cs">
+    <Compile Update="CSharp\IC\PrepareDataset.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Python\PY\ConfigModel.xaml.cs">
@@ -50,7 +50,7 @@
     <Page Update="CSharp\IC\ModelResult.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CSharp\IC\ModelTester.xaml">
+    <Page Update="CSharp\IC\TestModel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CSharp\IC\TrainModel.xaml">
@@ -62,7 +62,7 @@
     <Page Update="CSharp\ImageClassification.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CSharp\IC\DataPreparation.xaml">
+    <Page Update="CSharp\IC\PrepareDataset.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
@@ -71,13 +71,13 @@
     <Page Update="Python\PY\ConfigModel.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Python\PY\DataPreparation.xaml">
+    <Page Update="Python\PY\PrepareDataset.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Python\PY\ModelResult.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Python\PY\ModelTester.xaml">
+    <Page Update="Python\PY\TestModel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Python\PY\TrainModel.xaml">

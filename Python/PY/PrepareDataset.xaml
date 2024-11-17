@@ -1,4 +1,4 @@
-﻿<Page x:Class="Lithicsoft_Trainer_Studio.Python.PY.DataPreparation"
+﻿<Page x:Class="Lithicsoft_Trainer_Studio.Python.PY.PrepareDataset"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.Python.PY"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="655"
-      Title="DataPreparation">
+      Title="PrepareDataset">
 
     <Grid>
         <Label Content="Choose your dataset zip file:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>

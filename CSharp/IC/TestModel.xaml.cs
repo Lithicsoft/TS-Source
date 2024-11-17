@@ -1,6 +1,6 @@
 ﻿// License: Apache-2.0
 /*
- * CSharp/IC/ModelTester.xaml.cs: Back-end source code for model tester image classification page
+ * CSharp/IC/TestModel.xaml.cs: Back-end source code for model tester image classification page
  *
  * (C) Copyright 2024 Lithicsoft Organization
  * Author: Bui Nguyen Tan Sang <tansangbuinguyen52@gmail.com>
@@ -17,13 +17,13 @@ using System.Windows.Media.Imaging;
 namespace Lithicsoft_Trainer_Studio.CSharp.IC
 {
     /// <summary>
-    /// Interaction logic for ModelTester.xaml
+    /// Interaction logic for TestModel.xaml
     /// </summary>
-    public partial class ModelTester : Page
+    public partial class TestModel : Page
     {
         private readonly string projectName = string.Empty;
 
-        public ModelTester(string name)
+        public TestModel(string name)
         {
             InitializeComponent();
 

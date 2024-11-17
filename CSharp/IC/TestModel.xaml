@@ -1,4 +1,4 @@
-﻿<Page x:Class="Lithicsoft_Trainer_Studio.CSharp.IC.ModelTester"
+﻿<Page x:Class="Lithicsoft_Trainer_Studio.CSharp.IC.TestModel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.CSharp.IC"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="655"
-      Title="ModelTester" Loaded="Page_Loaded">
+      Title="TestModel" Loaded="Page_Loaded">
 
     <Grid>
         <Image x:Name="image1" HorizontalAlignment="Left" Height="329" Margin="10,10,0,0" VerticalAlignment="Top" Width="329" OpacityMask="Black" Stretch="Fill"/>
