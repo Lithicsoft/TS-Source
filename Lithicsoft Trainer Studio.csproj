@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Trainer-Studio.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\Trainer-Studio.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Trainer-Studio.ico" />
+    <Content Include="Assets\Trainer-Studio.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,8 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="UserControls\Lithicsoft Trainer Studio.png" />
-    <Resource Include="UserControls\Trainer Studio.png" />
+    <Resource Include="Assets\Lithicsoft Trainer Studio.png" />
+    <Resource Include="Assets\Trainer Studio.png" />
   </ItemGroup>
 
   <ItemGroup>

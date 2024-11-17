@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio"
         mc:Ignorable="d"
         Title="Lithicsoft Trainer Studio" Height="450" Width="800" MinHeight="450" MinWidth="800"
-        Icon="/UserControls/Trainer Studio.png"
+        Icon="/Assets/Trainer Studio.png"
         WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing"
         ResizeMode="NoResize">
     <Grid Loaded="MainWindows_Loaded" Margin="0,0,150,0">
