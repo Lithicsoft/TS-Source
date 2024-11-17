@@ -71,7 +71,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     string? projectLanguage = selectedProject?.ProjectLanguage;
                     string? projectType = selectedProject?.ProjectType;
 
-                    if (!string.IsNullOrEmpty(projectName) && !string.IsNullOrEmpty(projectLanguage) && !string.IsNullOrEmpty(projectType))
+                    if (!string.IsNullOrEmpty(projectName) && !string.IsNullOrEmpty(projectLanguage) && !string.IsNullOrEmpty(projectType) && projectLanguage != "Unknown" && projectType != "Unknown")
                     {
                         Trainer trainer = new(projectName, projectLanguage, projectType);
                         trainer.Show();
