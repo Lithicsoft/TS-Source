@@ -286,8 +286,8 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
         public class ViewModelType : INotifyPropertyChanged
         {
-            private ObservableCollection<string> _listOfTypes;
-            public ObservableCollection<string> ListOfTypes
+            private ObservableCollection<string>? _listOfTypes;
+            public ObservableCollection<string>? ListOfTypes
             {
                 get { return _listOfTypes; }
                 private set
