@@ -7,6 +7,7 @@
  */
 
 using Lithicsoft_Trainer_Studio.Utils;
+using Notifications.Wpf;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -89,6 +90,16 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             loadingWindow.Close();
 
             label1.Content = "Done!";
+
+            var notificationManager = new NotificationManager();
+
+            notificationManager.Show(new NotificationContent
+            {
+                Title = "Completed training of the model",
+                Message = "Return to Trainer Studio to test your new model.",
+                Type = NotificationType.Information
+            });
+
             TrainModel.Instance.isTraining = true;
             button1.IsEnabled = true;
         }
