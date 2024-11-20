@@ -9,7 +9,7 @@
       Title="ConfigModel" Loaded="Page_Loaded">
 
     <Grid>
-        <ListView Name="listView1" IsSynchronizedWithCurrentItem="True" Margin="0,0,0,35">
+        <ListView Name="listView1" IsSynchronizedWithCurrentItem="True" Margin="10,0,10,50">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Variable" Width="120" DisplayMemberBinding="{Binding Variable}" />
@@ -23,7 +23,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Save change" HorizontalAlignment="Center" Margin="0,415,0,0" VerticalAlignment="Top" BorderBrush="White" Foreground="White" Background="#FF5D6B99" Height="35" Width="655" Click="Button_Click"/>
+        <Button Content="Save change" Margin="10,0,10,10" BorderBrush="White" Foreground="White" Background="#FF5D6B99" Click="Button_Click" Height="35" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Page>

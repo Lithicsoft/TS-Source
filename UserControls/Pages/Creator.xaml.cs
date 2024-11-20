@@ -99,7 +99,10 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     {
                         try
                         {
-                            await PythonSetup();
+                            if (!string.IsNullOrEmpty(ProjectName) && !string.IsNullOrEmpty(ProjectLanguage) && !string.IsNullOrEmpty(ProjectType))
+                            {
+                                await PythonSetup(ProjectName, ProjectLanguage, ProjectType);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -124,12 +127,11 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             Creator.Instance.isCreating = false;
         }
 
-        private async Task PythonSetup()
+        private async Task PythonSetup(string ProjectName, string ProjectLanguage, string ProjectType)
         {
-            var ProjectType = comboBox2.SelectedItem?.ToString();
-            if (!string.IsNullOrEmpty(ProjectType))
+            if (!string.IsNullOrEmpty(ProjectName) && !string.IsNullOrEmpty(ProjectLanguage) && !string.IsNullOrEmpty(ProjectType))
             {
-                await InstallPackageDependencies(ProjectType);
+                await InstallPackageDependencies(ProjectName, ProjectLanguage, ProjectType);
             }
         }
 
@@ -169,26 +171,27 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
         }
 
-        private async Task InstallPackageDependencies(string language)
+        private async Task InstallPackageDependencies(string ProjectName, string ProjectLanguage, string ProjectType)
         {
-            ArgumentNullException.ThrowIfNull(language);
+            ArgumentNullException.ThrowIfNull(ProjectName);
+            ArgumentNullException.ThrowIfNull(ProjectLanguage);
+            ArgumentNullException.ThrowIfNull(ProjectType);
 
-            var ProjectType = comboBox2.SelectedItem?.ToString();
-            if (!string.IsNullOrEmpty(ProjectType))
+            if (!string.IsNullOrEmpty(ProjectLanguage) && !string.IsNullOrEmpty(ProjectType))
             {
-                await DownloadKitFiles(textBox1.Text, ProjectType, GetCheckForDiscreteGPU());
+                await DownloadKitFiles(ProjectName, ProjectType, GetCheckForDiscreteGPU());
             }
 
             try
             {
-                string[] kitRequirements = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, $"projects\\{textBox1.Text}\\requirements.txt"));
+                string[] kitRequirements = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, $"projects\\{ProjectName}\\requirements.txt"));
 
                 ProcessStartInfo start = new()
                 {
                     FileName = $"cmd.exe",
-                    Arguments = $"/K conda create -n \"{textBox1.Text}\" {kitRequirements[0]} & conda activate {textBox1.Text} & conda install {kitRequirements[1]} & python -m pip install python-dotenv & conda deactivate",
+                    Arguments = $"/K conda create -n \"{ProjectName}\" {kitRequirements[0]} & conda activate {ProjectName} & conda install {kitRequirements[1]} & python -m pip install python-dotenv & conda deactivate",
                     UseShellExecute = true,
-                    RedirectStandardOutput = false
+                    RedirectStandardOutput = false,
                 };
 
                 Process.Start(start);

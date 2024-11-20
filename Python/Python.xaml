@@ -7,14 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="810">
     <Grid>
-        <StackPanel Margin="0,0,660,0" MinWidth="70">
+        <StackPanel MinWidth="70" HorizontalAlignment="Left" Width="140">
             <Button Content="Prepare the dataset" Margin="0, 10, 0, 0" Background="#FF5D6B99" Foreground="White" BorderBrush="White" Width="130" Height="30" Click="Button_Click"/>
             <Button Content="Config the trainer" Margin="0, 10, 0, 0" Background="#FF5D6B99" Foreground="White" BorderBrush="White" Width="130" Height="30" Click="Button_Click1"/>
             <Button Content="Train the model" Margin="0, 10, 0, 0" Background="#FF5D6B99" BorderBrush="White" Foreground="White" Width="130" Height="30" Click="Button_Click_2"/>
             <Button Content="Test trained model" Margin="0, 10, 0, 0" Background="#FF5D6B99" Foreground="White" BorderBrush="White" Width="130" Height="30" Click="Button_Click_3"/>
             <Button Content="How to use?" Margin="0, 10, 0, 0" Background="#FF5D6B99" BorderBrush="White" Foreground="White" Width="130" Height="30" Click="Button_Click_4"/>
         </StackPanel>
-        <Frame x:Name="MainFrame" Content="Welcome to the Trainer! Now go step by step to create your own model!" NavigationUIVisibility="Hidden" Foreground="#FF0078D7" FontSize="16" HorizontalAlignment="Right" Width="660"/>
+        <Frame x:Name="MainFrame" Content="Welcome to the Trainer! Now go step by step to create your own model!" NavigationUIVisibility="Hidden" Foreground="#FF0078D7" FontSize="16" HorizontalAlignment="Left" Width="670" Margin="140,0,0,0"/>
 
     </Grid>
 </UserControl>
