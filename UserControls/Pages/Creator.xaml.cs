@@ -191,7 +191,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     FileName = $"cmd.exe",
                     Arguments = $"/K conda create -n \"{ProjectName}\" {kitRequirements[0]} & conda activate {ProjectName} & conda install {kitRequirements[1]} & python -m pip install python-dotenv & conda deactivate",
                     UseShellExecute = true,
-                    RedirectStandardOutput = false,
+                    RedirectStandardOutput = false
                 };
 
                 Process.Start(start);
@@ -203,16 +203,32 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             }
         }
 
+        static async Task<Dictionary<string, string>> LoadDataFromWebAsync(string url)
+        {
+            using HttpClient client = new();
+            string data = await client.GetStringAsync(url);
+
+            Dictionary<string, string> result = new();
+
+            string[] lines = data.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split([':'], 2, StringSplitOptions.TrimEntries);
+                if (parts.Length == 2)
+                {
+                    result[parts[0]] = parts[1];
+                }
+            }
+
+            return result;
+        }
+
         private static async Task DownloadKitFiles(string projectPath, string projectType, bool usingGPU)
         {
-            Dictionary<string, string> pythonTrainerKit = new()
-            {
-                {"Text Generation (RNN)", "rnn_text_generation"},
-                {"Text Generation (LSTM)", "lstm_text_generation"}
-            };
-
             try
             {
+                Dictionary<string, string> pythonTrainerKit = await LoadDataFromWebAsync("https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/refs/heads/main/dictionary.txt");
+
                 using HttpClient client = new();
 
                 async Task DownloadFileAsync(string sourceUrl, string destinationPath)
@@ -287,6 +303,18 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             }
         }
 
+        private static async Task LoadItemsFromFileAsync(string url, ObservableCollection<string> items)
+        {
+            using HttpClient client = new();
+            string data = await client.GetStringAsync(url);
+
+            string[] lines = data.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
+            foreach (string line in lines)
+            {
+                items.Add(line);
+            }
+        }
+
         public class ViewModelType : INotifyPropertyChanged
         {
             private ObservableCollection<string>? _listOfTypes;
@@ -302,7 +330,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
             public ViewModelType() => ListOfTypes = [];
 
-            public void UpdateListOfTypes(ComboBox comboBox1)
+            public async void UpdateListOfTypes(ComboBox comboBox1)
             {
                 ObservableCollection<string> items = [];
                 bool createAble = false;
@@ -318,12 +346,12 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     }
                     else if (selectedItem == "Python (TensorFlow)")
                     {
-                        items = ["Text Generation (RNN)"];
+                        await LoadItemsFromFileAsync("https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/refs/heads/main/tensorflow.txt", items);
                         createAble = true;
                     }
                     else if (selectedItem == "Python (PyTorch)")
                     {
-                        items = ["Text Generation (LSTM)"];
+                        await LoadItemsFromFileAsync("https://raw.githubusercontent.com/Lithicsoft/Lithicsoft-Trainer-Studio/refs/heads/main/pytorch.txt", items);
                         createAble = true;
                     }
                 }

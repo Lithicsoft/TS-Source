@@ -51,7 +51,7 @@ namespace Lithicsoft_Trainer_Studio.CSharpML
             MLContext mlContext = new(seed: 0);
             Train(mlContext, _trainDataPath);
         }
-        
+
         private static TransformerChain<RegressionPredictionTransformer<Microsoft.ML.Trainers.FastTree.FastTreeRegressionModelParameters>> Train(MLContext mlContext, string dataPath)
         {
             IDataView dataView = mlContext.Data.LoadFromTextFile<ModelInput>(dataPath, hasHeader: true, separatorChar: ',');
