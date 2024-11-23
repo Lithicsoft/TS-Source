@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Management;
 using System.Net;
 using System.Net.Http;
@@ -127,7 +128,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             Creator.Instance.isCreating = false;
         }
 
-        private async Task PythonSetup(string ProjectName, string ProjectLanguage, string ProjectType)
+        private static async Task PythonSetup(string ProjectName, string ProjectLanguage, string ProjectType)
         {
             if (!string.IsNullOrEmpty(ProjectName) && !string.IsNullOrEmpty(ProjectLanguage) && !string.IsNullOrEmpty(ProjectType))
             {
@@ -171,7 +172,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
         }
 
-        private async Task InstallPackageDependencies(string ProjectName, string ProjectLanguage, string ProjectType)
+        private static async Task InstallPackageDependencies(string ProjectName, string ProjectLanguage, string ProjectType)
         {
             ArgumentNullException.ThrowIfNull(ProjectName);
             ArgumentNullException.ThrowIfNull(ProjectLanguage);
@@ -208,7 +209,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             using HttpClient client = new();
             string data = await client.GetStringAsync(url);
 
-            Dictionary<string, string> result = new();
+            Dictionary<string, string> result = [];
 
             string[] lines = data.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
             foreach (string line in lines)
@@ -221,6 +222,13 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
             }
 
             return result;
+        }
+
+        private static async Task<bool> FileExistsAsync(string fileUri)
+        {
+            using HttpClient client = new();
+            var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, fileUri));
+            return response.IsSuccessStatusCode;
         }
 
         private static async Task DownloadKitFiles(string projectPath, string projectType, bool usingGPU)
@@ -246,10 +254,19 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
 
                 await DownloadFileAsync(baseUri + requirementsFile, projectBasePath + "requirements.txt");
 
-                string[] filesToDownload = ["trainer.py", "tester.py", ".env"];
+                string[] filesToDownload = ["trainer.py", "tester.py", "source.zip", ".env"];
                 foreach (var file in filesToDownload)
                 {
+                    if (!await FileExistsAsync(baseUri + file))
+                    {
+                        continue;
+                    }
                     await DownloadFileAsync(baseUri + file, projectBasePath + file);
+                }
+
+                if (File.Exists(projectBasePath + "src.zip"))
+                {
+                    ZipFile.ExtractToDirectory(projectBasePath + "source.zip", projectBasePath + "source");
                 }
             }
             catch (WebException ex)

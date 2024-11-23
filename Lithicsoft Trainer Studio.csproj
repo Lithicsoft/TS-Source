@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.ML.ImageAnalytics" Version="4.0.0" />
     <PackageReference Include="Microsoft.ML.OnnxConverter" Version="0.22.0" />
     <PackageReference Include="Microsoft.ML.TensorFlow" Version="4.0.0" />
+    <PackageReference Include="ModernWpfUI" Version="0.9.6" />
     <PackageReference Include="Notifications.Wpf" Version="0.1.1" />
     <PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.16.0" />
     <PackageReference Include="System.Management" Version="9.0.0" />
