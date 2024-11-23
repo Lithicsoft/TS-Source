@@ -6,10 +6,11 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.Python.PY"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="655"
-      Title="TestModel" Loaded="Page_Loaded">
+      Title="TestModel" Loaded="Page_Loaded"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid>
-        <Button x:Name="button1" Content="Run test" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False" Width="100" Height="30"/>
-
+        <!-- Button without custom colors -->
+        <Button x:Name="button1" Content="Run test" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="Button_Click" IsEnabled="False"/>
     </Grid>
 </Page>

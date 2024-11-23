@@ -6,19 +6,26 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.CSharp.VP"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="655"
-      Title="TestModel" Loaded="Page_Loaded">
+      Title="TestModel" Loaded="Page_Loaded"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid>
-        <Button x:Name="button1" Content="Predict" HorizontalAlignment="Left" Margin="352,36,0,0" VerticalAlignment="Top" Foreground="#FFEAEAF2" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False" Width="82" Height="30"/>
-        <Label x:Name="label1" Content="Predict: None" HorizontalAlignment="Left" Margin="352,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <Label Content="A" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <Label Content="B" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <Label Content="C" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <Label Content="D" HorizontalAlignment="Left" Margin="11,178,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <TextBox x:Name="ValueA" HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" Background="#FFF4F4F4" SelectionBrush="#FF5D6B99"/>
-        <TextBox x:Name="ValueB" HorizontalAlignment="Left" Margin="11,92,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" Background="#FFF4F4F4" SelectionBrush="#FF5D6B99"/>
-        <TextBox x:Name="ValueC" HorizontalAlignment="Left" Margin="11,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" Background="#FFF4F4F4" SelectionBrush="#FF5D6B99"/>
-        <TextBox x:Name="ValueD" HorizontalAlignment="Left" Margin="11,204,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" Background="#FFF4F4F4" SelectionBrush="#FF5D6B99"/>
+        <!-- Button to predict -->
+        <Button x:Name="button1" Content="Predict" HorizontalAlignment="Left" Margin="352,36,0,0" VerticalAlignment="Top" Width="82" Height="30" Click="Button_Click" IsEnabled="False"/>
 
+        <!-- Label displaying prediction -->
+        <Label x:Name="label1" Content="Predict: None" HorizontalAlignment="Left" Margin="352,10,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+        <!-- Labels for A, B, C, D -->
+        <Label Content="A" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="B" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top"/>
+        <Label Content="C" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top"/>
+        <Label Content="D" HorizontalAlignment="Left" Margin="11,193,0,0" VerticalAlignment="Top"/>
+
+        <!-- TextBoxes for values A, B, C, D -->
+        <TextBox x:Name="ValueA" HorizontalAlignment="Left" Margin="11,34,0,0" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False"/>
+        <TextBox x:Name="ValueB" HorizontalAlignment="Left" Margin="11,95,0,0" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False"/>
+        <TextBox x:Name="ValueC" HorizontalAlignment="Left" Margin="11,156,0,0" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False"/>
+        <TextBox x:Name="ValueD" HorizontalAlignment="Left" Margin="11,217,0,0" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False"/>
     </Grid>
 </Page>

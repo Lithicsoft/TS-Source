@@ -6,24 +6,33 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.UserControls.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Manager" Loaded="Manager_Loaded">
+      Title="Manager" Loaded="Manager_Loaded"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid>
-        <Label Content="Open project" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0078D7" FontSize="16"/>
-        <ListView x:Name="listView1" d:ItemsSource="{d:SampleData ItemCount=5}" ItemContainerStyle="{DynamicResource itemStyle}" Margin="0,36,0,0" MinHeight="414" >
+        <!-- Define rows for layout -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Row for label -->
+            <RowDefinition Height="*"/>
+            <!-- Row for ListView -->
+        </Grid.RowDefinitions>
+
+        <!-- Label for Open project -->
+        <Label Content="Open project" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="5,10,0,10"/>
+
+        <!-- ListView for displaying projects -->
+        <ListView x:Name="listView1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="HandleDoubleClick" Grid.Row="1" Margin="10,0" MinHeight="350">
             <ListView.View>
                 <GridView>
+                    <!-- Project Name Column -->
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding ProjectName}" Width="230"/>
+                    <!-- Project Language Column -->
                     <GridViewColumn Header="Language" DisplayMemberBinding="{Binding ProjectLanguage}" Width="200"/>
-                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ProjectType}" Width="200"/>
+                    <!-- Project Type Column -->
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ProjectType}" Width="190"/>
                 </GridView>
             </ListView.View>
         </ListView>
-
-        <Grid.Resources>
-            <Style x:Key="itemStyle" TargetType="{x:Type ListViewItem}">
-                <EventSetter Event="MouseDoubleClick" Handler="HandleDoubleClick"/>
-            </Style>
-        </Grid.Resources>
     </Grid>
 </Page>

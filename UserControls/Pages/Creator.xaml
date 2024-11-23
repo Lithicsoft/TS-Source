@@ -6,35 +6,52 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.UserControls.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="635"
-      Title="Creator" Loaded="Page_Loaded">
+      Title="Creator" Loaded="Page_Loaded"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid>
-        <Label Content="New project" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0078D7" FontSize="16" FontWeight="Bold" Margin="5,0,0,0"/>
-        <Rectangle HorizontalAlignment="Center" Height="414" Margin="0,36,0,0" Stroke="#FF828790" VerticalAlignment="Top" Width="635"/>
-        <ComboBox x:Name="comboBox1" ItemsSource="{Binding ListOfLanguages}" HorizontalAlignment="Center" Margin="0,128,0,0" VerticalAlignment="Top" Width="616" Height="30" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" IsEditable="True" IsReadOnly="True" SelectionChanged="ComboBox1_SelectionChanged">
-            <ComboBox.Background>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#FFF0F0F0"/>
-                    <GradientStop Color="#FFF4F4F4" Offset="1"/>
-                </LinearGradientBrush>
-            </ComboBox.Background>
-        </ComboBox>
+        <!-- Define rows to structure the layout -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Row for "New project" label -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row for project name label -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row for project name input (TextBox) -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row for "Project language" label -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row for comboBox1 (language) -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row for "Project Type" label -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row for comboBox2 (type) -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row for "Create project" button -->
+        </Grid.RowDefinitions>
 
-        <TextBox x:Name="textBox1" HorizontalAlignment="Center" Margin="0,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="616" Height="30" Background="#FFF4F4F4" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" TextChanged="TextBox_TextChanged" SelectionBrush="#FF5D6B99"/>
+        <!-- New project label -->
+        <Label Content="New project" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="5,10,0,0"/>
 
-        <Label Content="Project name" HorizontalAlignment="Right" Margin="0,41,545,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <Label Content="Project language" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <Label Content="Project Type" HorizontalAlignment="Left" Margin="10,163,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
+        <!-- Project name label -->
+        <Label Content="Project name" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
 
-        <ComboBox x:Name="comboBox2" ItemsSource="{Binding ListOfTypes}" HorizontalAlignment="Center" Margin="0,190,0,0" VerticalAlignment="Top" Width="616" Height="30" BorderBrush="#FF5D6B99" Foreground="#FF5D6B99" SelectionChanged="ComboBox2_SelectionChanged" IsReadOnly="True" IsEditable="True">
-            <ComboBox.Background>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#FFF0F0F0"/>
-                    <GradientStop Color="#FFF4F4F4" Offset="1"/>
-                </LinearGradientBrush>
-            </ComboBox.Background>
-        </ComboBox>
+        <!-- Project name input -->
+        <TextBox x:Name="textBox1" Grid.Row="2" HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="616" TextChanged="TextBox_TextChanged"/>
 
-        <Button x:Name="button1" Content="Create project" HorizontalAlignment="Right" Margin="0,228,10,192" Background="#FF5D6B99" BorderBrush="Transparent" Foreground="White" Width="100" Height="30" Click="Button1_Click" IsEnabled="False"/>
+        <!-- Project language label -->
+        <Label Content="Project language" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+
+        <!-- ComboBox for language selection -->
+        <ComboBox x:Name="comboBox1" Grid.Row="4" ItemsSource="{Binding ListOfLanguages}" HorizontalAlignment="Center" Margin="0,10,0,0" Width="616" IsEditable="True" IsReadOnly="True" SelectionChanged="ComboBox1_SelectionChanged"/>
+
+        <!-- Project Type label -->
+        <Label Content="Project Type" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+
+        <!-- ComboBox for project type selection -->
+        <ComboBox x:Name="comboBox2" Grid.Row="6" ItemsSource="{Binding ListOfTypes}" HorizontalAlignment="Center" Margin="0,10,0,0" Width="616" SelectionChanged="ComboBox2_SelectionChanged" IsReadOnly="True" IsEditable="True"/>
+
+        <!-- Create project button -->
+        <Button x:Name="button1" Grid.Row="7" Content="Create project" HorizontalAlignment="Right" Margin="0,10,10,0" Click="Button1_Click" IsEnabled="False" VerticalAlignment="Top"/>
     </Grid>
 </Page>

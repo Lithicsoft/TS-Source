@@ -6,12 +6,22 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.CSharp.IC"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="655"
-      Title="TestModel" Loaded="Page_Loaded">
+      Title="TestModel" Loaded="Page_Loaded"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid>
-        <Image x:Name="image1" HorizontalAlignment="Left" Height="329" Margin="10,10,0,0" VerticalAlignment="Top" Width="329" OpacityMask="Black" Stretch="Fill"/>
-        <Button x:Name="button1" Content="Choose Image" HorizontalAlignment="Left" Margin="10,350,0,0" Height="30" VerticalAlignment="Top" Foreground="White" BorderBrush="White" Background="#FF5D6B99" Click="Button_Click" IsEnabled="False" Width="100"/>
-        <Label x:Name="label1" Content="Predict: None" HorizontalAlignment="Left" Margin="352,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
+        <!-- Image for displaying the chosen image -->
+        <Image x:Name="image1" HorizontalAlignment="Left" VerticalAlignment="Top" 
+               Width="329" Height="329" Margin="10,10,0,0" Stretch="Fill" OpacityMask="Black"/>
 
+        <!-- Button to choose an image -->
+        <Button x:Name="button1" Content="Choose Image" HorizontalAlignment="Left" 
+                VerticalAlignment="Top" Width="100" Height="30" 
+                Margin="10,350,0,0" Click="Button_Click" IsEnabled="False"/>
+
+        <!-- Label for displaying prediction status -->
+        <Label x:Name="label1" Content="Predict: None" HorizontalAlignment="Left" 
+               VerticalAlignment="Top" Margin="352,10,0,0" 
+               FontSize="16" FontWeight="Bold"/>
     </Grid>
 </Page>

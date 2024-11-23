@@ -8,7 +8,9 @@
         Title="Lithicsoft Trainer Studio" Height="450" Width="800" MinHeight="450" MinWidth="800"
         Icon="/Assets/Trainer Studio.png"
         WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True">
     <Grid Loaded="MainWindows_Loaded" Margin="0,0,150,0">
         <StackPanel x:Name="MainStackPanel" Margin="0,0,-150,0"/>
     </Grid>

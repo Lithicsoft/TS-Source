@@ -6,11 +6,18 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.Python.PY"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="655"
-      Title="TrainModel">
+      Title="TrainModel"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid Loaded="Grid_Loaded">
-        <Label x:Name="label1" Content="Information" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF0078D7"/>
-        <Button x:Name="button1" Content="Train" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="72" Height="30" Background="#FF5D6B99" BorderBrush="White" Foreground="White" IsEnabled="False" Click="Button1_Click"/>
+        <!-- Information Label -->
+        <Label x:Name="label1" Content="Information" HorizontalAlignment="Left" 
+               VerticalAlignment="Top" Margin="10,10,0,0"
+               FontSize="16" FontWeight="Bold"/>
 
+        <!-- Train Button -->
+        <Button x:Name="button1" Content="Train" HorizontalAlignment="Left" 
+                VerticalAlignment="Top" Width="72" Height="30" 
+                Margin="10,50,0,0" IsEnabled="False" Click="Button1_Click"/>
     </Grid>
 </Page>

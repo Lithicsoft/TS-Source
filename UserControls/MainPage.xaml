@@ -5,19 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Loaded="MainPage_Loaded">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="MainPage_Loaded"
+             xmlns:ui="http://schemas.modernwpf.com/2019">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Frame x:Name="Main" Margin="10,10,0,10" NavigationUIVisibility="Hidden" HorizontalAlignment="Left" Width="635"/>
-        <StackPanel Margin="650,10,10,10">
-            <Label Content="Action" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="#FF0078D7" FontSize="16" FontWeight="Bold"/>
-            <Button x:Name="button1" Content="  Create new project" HorizontalContentAlignment="Left" Margin="0, 3, 0, 0" Width="130" Foreground="White" Click="Button1_Click" BorderBrush="White" Height="30" Background="#FF5D6B99"/>
-            <Button Content="   Import project" HorizontalContentAlignment="Left" Margin="0, 10, 0, 0" Width="130" Foreground="White" Background="#FF5D6B99" BorderBrush="White" Click="Button_Click" Height="30"/>
-            <Button Content="   About" HorizontalContentAlignment="Left" Margin="0, 10, 0, 0" Width="130" Foreground="White" Background="#FF5D6B99" BorderBrush="White" Click="Button_Click_1" Height="30"/>
-            <Button x:Name="button4" Content="↩" Margin="0, 285, 110, 0" Width="30" Foreground="White" IsEnabled="False" BorderBrush="White" Click="Button4_Click" Background="#FF40568D"/>
-        </StackPanel>
-        
+
+        <!-- Frame for Main Content -->
+        <Frame x:Name="Main" Margin="10" NavigationUIVisibility="Hidden" HorizontalAlignment="Left" Width="635"/>
+
+        <!-- Side Panel with Action Buttons -->
+        <ui:SimpleStackPanel Margin="650,10,10,10">
+            <!-- Action Title -->
+            <Label Content="Action" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <!-- New Project Button -->
+            <Button x:Name="button1" Content="New project" HorizontalContentAlignment="Left" Width="130" Margin="0, 0, 0, 10" Click="Button1_Click"/>
+
+            <!-- Open Project Button -->
+            <Button Content="Open project" HorizontalContentAlignment="Left" Width="130" Margin="0, 0, 0, 10" Click="Button_Click"/>
+
+            <!-- About Button -->
+            <Button Content="About" HorizontalContentAlignment="Left" Width="130" Margin="0, 0, 0, 10" Click="Button_Click_1"/>
+
+            <!-- Back Button -->
+            <Button x:Name="button4" Content="↩" Width="130" IsEnabled="False" Margin="0,9,0,0" Click="Button4_Click" VerticalAlignment="Top"/>
+        </ui:SimpleStackPanel>
     </Grid>
 </UserControl>

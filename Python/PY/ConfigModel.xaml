@@ -6,13 +6,17 @@
       xmlns:local="clr-namespace:Lithicsoft_Trainer_Studio.Python.PY"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="655"
-      Title="ConfigModel" Loaded="Page_Loaded">
+      Title="ConfigModel" Loaded="Page_Loaded"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid>
+        <!-- ListView to display data with editable values -->
         <ListView Name="listView1" IsSynchronizedWithCurrentItem="True" Margin="10,0,10,50">
             <ListView.View>
                 <GridView>
+                    <!-- Column for the Variable names -->
                     <GridViewColumn Header="Variable" Width="120" DisplayMemberBinding="{Binding Variable}" />
+                    <!-- Column for the editable values -->
                     <GridViewColumn Header="Value" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -23,7 +27,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Save change" Margin="10,0,10,10" BorderBrush="White" Foreground="White" Background="#FF5D6B99" Click="Button_Click" Height="35" VerticalAlignment="Bottom"/>
 
+        <!-- Save button with default styling -->
+        <Button Content="Save change" Margin="10,0,10,10" Height="35" VerticalAlignment="Bottom" Click="Button_Click"/>
     </Grid>
 </Page>
