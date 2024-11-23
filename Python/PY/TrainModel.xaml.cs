@@ -46,12 +46,12 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             if (Directory.Exists($"projects\\{projectName}\\datasets"))
             {
                 label1.Content = "Ready for train your model";
-                button1.IsEnabled = true;
             }
             else
             {
-                label1.Content = "Please prepare your datasets before training model";
+                label1.Content = "Prepare your datasets (if there is) before training model";
             }
+            button1.IsEnabled = true;
         }
 
         private async void Button1_Click(object sender, RoutedEventArgs e)
