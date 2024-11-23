@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
+using MessageBox = ModernWpf.MessageBox;
 
 namespace Lithicsoft_Trainer_Studio.UserControls
 {

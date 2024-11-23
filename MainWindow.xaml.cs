@@ -10,6 +10,7 @@ using Lithicsoft_Trainer_Studio.UserControls;
 using Lithicsoft_Trainer_Studio.UserControls.Pages;
 using System.Windows;
 using System.Windows.Controls;
+using MessageBox = ModernWpf.MessageBox;
 
 namespace Lithicsoft_Trainer_Studio
 {

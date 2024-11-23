@@ -8,6 +8,7 @@
 
 using Lithicsoft_Trainer_Studio.CSharp;
 using System.Windows;
+using MessageBox = ModernWpf.MessageBox;
 
 namespace Lithicsoft_Trainer_Studio
 {

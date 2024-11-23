@@ -11,6 +11,7 @@ using Notifications.Wpf;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using MessageBox = ModernWpf.MessageBox;
 
 namespace Lithicsoft_Trainer_Studio.CSharp.VP
 {

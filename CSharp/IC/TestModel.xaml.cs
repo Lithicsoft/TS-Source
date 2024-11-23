@@ -13,6 +13,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using MessageBox = ModernWpf.MessageBox;
 
 namespace Lithicsoft_Trainer_Studio.CSharp.IC
 {
