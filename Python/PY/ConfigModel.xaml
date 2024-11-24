@@ -29,6 +29,6 @@
         </ListView>
 
         <!-- Save button with default styling -->
-        <Button Content="Save change" Margin="10,0,10,10" Height="35" VerticalAlignment="Bottom" Click="Button_Click"/>
+        <Button Content="Save change" Margin="550,0,10,10" Height="35" VerticalAlignment="Bottom" Click="Button_Click"/>
     </Grid>
 </Page>
