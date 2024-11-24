@@ -95,7 +95,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls
             {
                 System.Diagnostics.Process.Start(new ProcessStartInfo
                 {
-                    FileName = "https://lithicsoft.rf.gd/trainerstudio/",
+                    FileName = "https://github.com/Lithicsoft/Lithicsoft-Trainer-Studio",
                     UseShellExecute = true
                 });
             }

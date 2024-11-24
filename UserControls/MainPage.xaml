@@ -26,8 +26,8 @@
             <!-- Open Project Button -->
             <Button Content="Open project" HorizontalContentAlignment="Left" Width="130" Margin="0, 0, 0, 10" Click="Button_Click"/>
 
-            <!-- About Button -->
-            <Button Content="About" HorizontalContentAlignment="Left" Width="130" Margin="0, 0, 0, 10" Click="Button_Click_1"/>
+            <!-- Github Button -->
+            <Button Content="Github" HorizontalContentAlignment="Left" Width="130" Margin="0, 0, 0, 10" Click="Button_Click_1"/>
 
             <!-- Back Button -->
             <Button x:Name="button4" Content="↩" Width="130" IsEnabled="False" Margin="0,9,0,0" Click="Button4_Click" VerticalAlignment="Top"/>
