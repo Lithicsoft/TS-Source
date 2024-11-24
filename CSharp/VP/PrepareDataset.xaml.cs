@@ -38,7 +38,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                     Filter = "Csv files (*.csv)|*.csv"
                 };
                 Nullable<bool> result = openFileDialog.ShowDialog();
-                if (result == true)
+                if (!string.IsNullOrEmpty(openFileDialog.FileName))
                 {
                     textBox1.Text = openFileDialog.FileName;
                 }

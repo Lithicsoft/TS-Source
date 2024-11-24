@@ -27,5 +27,9 @@
         <TextBox x:Name="ValueB" HorizontalAlignment="Left" Margin="11,95,0,0" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False"/>
         <TextBox x:Name="ValueC" HorizontalAlignment="Left" Margin="11,156,0,0" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False"/>
         <TextBox x:Name="ValueD" HorizontalAlignment="Left" Margin="11,217,0,0" VerticalAlignment="Top" Width="318" Height="30" IsEnabled="False"/>
+
+        <!-- Loading bar -->
+        <ProgressBar x:Name="progressBar" IsIndeterminate="True" Visibility="Hidden"
+             Height="20" Margin="352,71,221,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

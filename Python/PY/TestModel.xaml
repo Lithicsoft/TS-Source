@@ -10,7 +10,11 @@
       xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid>
-        <!-- Button without custom colors -->
+        <!-- Button for run test -->
         <Button x:Name="button1" Content="Run test" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="Button_Click" IsEnabled="False"/>
+
+        <!-- Loading bar -->
+        <ProgressBar x:Name="progressBar" IsIndeterminate="True" Visibility="Hidden"
+             Height="20" Margin="10,45,545,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

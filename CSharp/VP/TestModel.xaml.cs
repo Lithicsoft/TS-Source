@@ -12,6 +12,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using MessageBox = ModernWpf.MessageBox;
+using Page = System.Windows.Controls.Page;
 
 namespace Lithicsoft_Trainer_Studio.CSharp.VP
 {
@@ -49,6 +50,8 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
         {
             button1.IsEnabled = false;
 
+            progressBar.Visibility = Visibility.Visible;
+
             await Task.Run(() =>
             {
                 try
@@ -72,6 +75,8 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                     MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
+
+            progressBar.Visibility = Visibility.Hidden;
 
             if (prediction != null)
             {

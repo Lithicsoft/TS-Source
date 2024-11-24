@@ -9,11 +9,13 @@
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.Win32;
+using ModernWpf.Controls;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using MessageBox = ModernWpf.MessageBox;
+using Page = System.Windows.Controls.Page;
 
 namespace Lithicsoft_Trainer_Studio.CSharp.IC
 {
@@ -53,12 +55,20 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
             };
             Nullable<bool> result = openFileDialog.ShowDialog();
 
+            if (string.IsNullOrEmpty(openFileDialog.FileName))
+            {
+                button1.IsEnabled = true;
+                return;
+            }
+
             BitmapImage bitmap = new();
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(openFileDialog.FileName, UriKind.Absolute);
             bitmap.EndInit();
 
             image1.Source = bitmap;
+
+            progressBar.Visibility = Visibility.Visible;
 
             await Task.Run(() =>
             {
@@ -83,6 +93,8 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                     MessageBox.Show($"Error running model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
+
+            progressBar.Visibility = Visibility.Hidden;
 
             if (prediction != null)
             {

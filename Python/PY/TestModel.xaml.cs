@@ -11,6 +11,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using MessageBox = ModernWpf.MessageBox;
+using Page = System.Windows.Controls.Page;
 
 namespace Lithicsoft_Trainer_Studio.Python.PY
 {
@@ -40,6 +41,8 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
         {
             button1.IsEnabled = false;
 
+            progressBar.Visibility = Visibility.Visible;
+
             await Task.Run(() =>
             {
                 try
@@ -59,6 +62,8 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                     MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
+
+            progressBar.Visibility = Visibility.Hidden;
 
             button1.IsEnabled = true;
         }

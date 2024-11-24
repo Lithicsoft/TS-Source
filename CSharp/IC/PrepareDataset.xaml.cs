@@ -39,7 +39,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                     Filter = "Zip files (*.zip)|*.zip"
                 };
                 Nullable<bool> result = openFileDialog.ShowDialog();
-                if (result == true)
+                if (!string.IsNullOrEmpty(openFileDialog.FileName))
                 {
                     textBox1.Text = openFileDialog.FileName;
                 }

@@ -15,13 +15,17 @@
                Width="329" Height="329" Margin="10,10,0,0" Stretch="Fill" OpacityMask="Black"/>
 
         <!-- Button to choose an image -->
-        <Button x:Name="button1" Content="Choose Image" HorizontalAlignment="Left" 
-                VerticalAlignment="Top" Width="100" Height="30" 
+        <Button x:Name="button1" Content="Choose Image" 
+                VerticalAlignment="Top" Width="110" Height="35" 
                 Margin="10,350,0,0" Click="Button_Click" IsEnabled="False"/>
 
         <!-- Label for displaying prediction status -->
         <Label x:Name="label1" Content="Predict: None" HorizontalAlignment="Left" 
                VerticalAlignment="Top" Margin="352,10,0,0" 
                FontSize="16" FontWeight="Bold"/>
+
+        <!-- Loading bar -->
+        <ProgressBar x:Name="progressBar" IsIndeterminate="True" Visibility="Hidden"
+                     Height="20" Margin="352,36,200,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>
