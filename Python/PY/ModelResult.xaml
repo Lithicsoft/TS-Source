@@ -16,7 +16,7 @@
                 HorizontalContentAlignment="Center" Click="Button1_Click"/>
 
         <!-- RichTextBox for displaying code/document -->
-        <RichTextBox x:Name="DocCode" Margin="10, 41, 10, 10" MaxHeight="450" MaxWidth="655" IsDocumentEnabled="True">
+        <RichTextBox x:Name="DocCode" Margin="10, 41, 10, 10" MaxHeight="400" MaxWidth="655" IsDocumentEnabled="True">
             <FlowDocument>
                 <Paragraph>
                     <!-- Content goes here -->

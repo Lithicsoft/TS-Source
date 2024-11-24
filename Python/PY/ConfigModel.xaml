@@ -11,13 +11,13 @@
 
     <Grid>
         <!-- ListView to display data with editable values -->
-        <ListView Name="listView1" IsSynchronizedWithCurrentItem="True" Margin="10,0,10,50">
+        <ListView Name="listView1" IsSynchronizedWithCurrentItem="True" Margin="10,0,10,0" Height="400" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
                     <!-- Column for the Variable names -->
-                    <GridViewColumn Header="Variable" Width="120" DisplayMemberBinding="{Binding Variable}" />
+                    <GridViewColumn Header="Variable" Width="300" DisplayMemberBinding="{Binding Variable}" />
                     <!-- Column for the editable values -->
-                    <GridViewColumn Header="Value" Width="120">
+                    <GridViewColumn Header="Value" Width="250">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />

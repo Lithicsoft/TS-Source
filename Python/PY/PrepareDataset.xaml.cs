@@ -8,10 +8,12 @@
 
 using Lithicsoft_Trainer_Studio.Utils;
 using Microsoft.Win32;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using MessageBox = ModernWpf.MessageBox;
 
 namespace Lithicsoft_Trainer_Studio.Python.PY
@@ -28,6 +30,12 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             InitializeComponent();
 
             projectName = name;
+
+            if (File.Exists($"projects\\{projectName}\\datasets\\tree.txt"))
+            {
+                DocCode.Document.Blocks.Clear();
+                DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\datasets\\tree.txt"))));
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -82,6 +90,17 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                         Directory.CreateDirectory($"projects\\{projectName}\\datasets");
                         string extractPath = $"projects\\{projectName}\\datasets";
                         ZipFile.ExtractToDirectory(path, extractPath);
+
+                        ProcessStartInfo start = new()
+                        {
+                            FileName = $"cmd.exe",
+                            Arguments = $"/K tree projects\\{projectName}\\datasets /F /A > projects\\{projectName}\\datasets\\tree.txt",
+                            UseShellExecute = true,
+                            RedirectStandardOutput = false,
+                            CreateNoWindow = true
+                        };
+
+                        Process.Start(start);
                     }
                     catch (Exception ex)
                     {
@@ -93,6 +112,12 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                     MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
+
+            if (File.Exists($"projects\\{projectName}\\datasets\\tree.txt"))
+            {
+                DocCode.Document.Blocks.Clear();
+                DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\datasets\\tree.txt"))));
+            }
 
             parentWindow?.Show();
             loadingWindow.Close();

@@ -22,5 +22,14 @@
         <!-- Button to choose the file -->
         <Button x:Name="button1" Content="Choose file" HorizontalAlignment="Left" VerticalAlignment="Top" 
                 Width="100" Height="30" Click="Button_Click" Margin="545,48,0,0"/>
+        
+        <!-- RichTextBox for displaying dataset tree -->
+        <RichTextBox x:Name="DocCode" Margin="10,85,10,10" MaxHeight="350" MaxWidth="655" IsDocumentEnabled="True">
+            <FlowDocument>
+                <Paragraph>
+                    <!-- Content goes here -->
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </Page>
