@@ -118,7 +118,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                 Type = NotificationType.Information
             });
 
-            TrainModel.Instance.isTraining = true;
+            TrainModel.Instance.isTraining = false;
             button1.IsEnabled = true;
         }
     }
