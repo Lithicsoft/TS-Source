@@ -31,9 +31,14 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Directory.Exists($"projects\\{projectName}\\outputs"))
+            if (File.Exists($"projects\\{projectName}\\tester.py") && Directory.Exists($"projects\\{projectName}\\outputs"))
             {
                 button1.IsEnabled = true;
+            } 
+            else
+            {
+                button1.IsEnabled = false;
+                button1.Content = "Unavailable";
             }
         }
 
