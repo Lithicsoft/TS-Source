@@ -30,7 +30,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
 
             projectName = name;
 
-            if (File.Exists($"projects\\{projectName}\\datasets\\tree.txt"))
+            if (File.Exists($"projects\\{projectName}\\tree.txt"))
             {
                 DocCode.Document.Blocks.Clear();
                 DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\tree.txt"))));
@@ -143,7 +143,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                 }
             });
 
-            if (File.Exists($"projects\\{projectName}\\datasets\\tree.txt"))
+            if (File.Exists($"projects\\{projectName}\\tree.txt"))
             {
                 DocCode.Document.Blocks.Clear();
                 DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\tree.txt"))));

@@ -31,7 +31,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
 
             projectName = name;
 
-            if (File.Exists($"projects\\{projectName}\\datasets\\tree.txt"))
+            if (File.Exists($"projects\\{projectName}\\tree.txt"))
             {
                 DocCode.Document.Blocks.Clear();
                 DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\tree.txt"))));
@@ -125,7 +125,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                 }
             });
 
-            if (File.Exists($"projects\\{projectName}\\datasets\\tree.txt"))
+            if (File.Exists($"projects\\{projectName}\\tree.txt"))
             {
                 DocCode.Document.Blocks.Clear();
                 DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\tree.txt"))));
