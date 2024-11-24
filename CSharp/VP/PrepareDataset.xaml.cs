@@ -33,7 +33,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             if (File.Exists($"projects\\{projectName}\\datasets\\tree.txt"))
             {
                 DocCode.Document.Blocks.Clear();
-                DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\datasets\\tree.txt"))));
+                DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\tree.txt"))));
             }
         }
 
@@ -112,13 +112,19 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                         ProcessStartInfo start = new()
                         {
                             FileName = $"cmd.exe",
-                            Arguments = $"/K tree projects\\{projectName}\\datasets /F /A > projects\\{projectName}\\datasets\\tree.txt",
+                            Arguments = $"/K tree projects\\{projectName}\\datasets /F /A > projects\\{projectName}\\tree.txt & exit",
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
                             CreateNoWindow = true
                         };
 
-                        Process.Start(start);
+                        using (var process = Process.Start(start))
+                        {
+                            if (process != null)
+                            {
+                                process.WaitForExit();
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -140,7 +146,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
             if (File.Exists($"projects\\{projectName}\\datasets\\tree.txt"))
             {
                 DocCode.Document.Blocks.Clear();
-                DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\datasets\\tree.txt"))));
+                DocCode.Document.Blocks.Add(new Paragraph(new Run(File.ReadAllText($"projects\\{projectName}\\tree.txt"))));
             }
 
             parentWindow?.Show();

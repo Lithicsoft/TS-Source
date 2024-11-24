@@ -202,7 +202,13 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                     RedirectStandardOutput = false
                 };
 
-                Process.Start(start);
+                using (var process = Process.Start(start))
+                {
+                    if (process != null)
+                    {
+                        process.WaitForExit();
+                    }
+                }
             }
             catch (Exception ex)
             {

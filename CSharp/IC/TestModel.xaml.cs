@@ -9,10 +9,8 @@
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.Win32;
-using ModernWpf.Controls;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using MessageBox = ModernWpf.MessageBox;
 using Page = System.Windows.Controls.Page;

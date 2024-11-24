@@ -9,7 +9,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using MessageBox = ModernWpf.MessageBox;
 using Page = System.Windows.Controls.Page;
 
@@ -34,7 +33,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             if (File.Exists($"projects\\{projectName}\\tester.py") && Directory.Exists($"projects\\{projectName}\\outputs"))
             {
                 button1.IsEnabled = true;
-            } 
+            }
             else
             {
                 button1.IsEnabled = false;
@@ -60,7 +59,13 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                         RedirectStandardOutput = false
                     };
 
-                    Process.Start(start);
+                    using (var process = Process.Start(start))
+                    {
+                        if (process != null)
+                        {
+                            process.WaitForExit();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

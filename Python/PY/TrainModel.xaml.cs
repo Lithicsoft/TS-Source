@@ -81,23 +81,18 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
 
                     ProcessStartInfo start = new()
                     {
-                        FileName = "cmd.exe",
-                        Arguments = $"/C conda activate \"{projectName}\" && python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\trainer.py")}\" && conda deactivate && pause && exit",
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true
+                        FileName = $"cmd.exe",
+                        Arguments = $"/K conda activate \"{projectName}\" & python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\trainer.py")}\" & conda deactivate & pause & exit",
+                        UseShellExecute = true,
+                        RedirectStandardOutput = false
                     };
 
-                    using (Process process = new())
+                    using (var process = Process.Start(start))
                     {
-                        process.StartInfo = start;
-                        process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
-                        process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
-                        process.Start();
-                        process.BeginOutputReadLine();
-                        process.BeginErrorReadLine();
-                        process.WaitForExit();
+                        if (process != null)
+                        {
+                            process.WaitForExit();
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -123,7 +118,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                 Type = NotificationType.Information
             });
 
-            TrainModel.Instance.isTraining = false;
+            TrainModel.Instance.isTraining = true;
             button1.IsEnabled = true;
         }
     }
