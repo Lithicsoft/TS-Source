@@ -191,7 +191,7 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                 ProcessStartInfo start = new()
                 {
                     FileName = $"cmd.exe",
-                    Arguments = $"/K conda create -n \"{ProjectName}\" {kitRequirements[0]} -y & conda activate {ProjectName} & conda install {kitRequirements[1]} -y & python -m pip install python-dotenv -y & conda deactivate",
+                    Arguments = $"/K conda create -n \"{ProjectName}\" {kitRequirements[0]} -y & conda activate {ProjectName} & conda install {kitRequirements[1]} -y & python -m pip install python-dotenv & conda deactivate",
                     UseShellExecute = true,
                     RedirectStandardOutput = false
                 };

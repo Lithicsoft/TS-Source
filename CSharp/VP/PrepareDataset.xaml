@@ -24,7 +24,7 @@
                 Width="100" Height="30" Click="Button_Click" Margin="545,48,0,0"/>
 
         <!-- RichTextBox for displaying dataset tree -->
-        <RichTextBox x:Name="DocCode" Margin="10,85,10,10" MaxHeight="350" MaxWidth="655" IsDocumentEnabled="True">
+        <RichTextBox x:Name="DocCode" Margin="10,85,0,10" MaxHeight="350" MaxWidth="655" IsDocumentEnabled="True" HorizontalAlignment="Left" Width="635">
             <FlowDocument>
                 <Paragraph>
                     <!-- Content goes here -->

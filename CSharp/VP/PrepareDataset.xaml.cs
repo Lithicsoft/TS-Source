@@ -107,8 +107,8 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                         {
                             FileName = $"cmd.exe",
                             Arguments = $"/K tree projects\\{projectName}\\datasets /F /A > projects\\{projectName}\\datasets\\tree.txt",
-                            UseShellExecute = true,
-                            RedirectStandardOutput = false,
+                            UseShellExecute = false,
+                            RedirectStandardOutput = true,
                             CreateNoWindow = true
                         };
 
