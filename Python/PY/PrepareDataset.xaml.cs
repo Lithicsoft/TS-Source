@@ -94,7 +94,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                         ProcessStartInfo start = new()
                         {
                             FileName = $"cmd.exe",
-                            Arguments = $"/K tree projects\\{projectName}\\datasets /F /A > projects\\{projectName}\\datasets\\tree.txt",
+                            Arguments = $"/K tree projects\\{projectName}\\datasets /F /A > projects\\{projectName}\\datasets\\tree.txt & exit",
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
                             CreateNoWindow = true

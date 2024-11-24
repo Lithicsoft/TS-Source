@@ -82,7 +82,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                     ProcessStartInfo start = new()
                     {
                         FileName = $"cmd.exe",
-                        Arguments = $"/K conda activate \"{projectName}\" & python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\trainer.py")}\" & conda deactivate",
+                        Arguments = $"/K conda activate \"{projectName}\" & python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\trainer.py")}\" & conda deactivate & pause & exit",
                         UseShellExecute = true,
                         RedirectStandardOutput = false
                     };
