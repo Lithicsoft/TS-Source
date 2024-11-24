@@ -124,7 +124,7 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                         ProcessStartInfo start = new()
                         {
                             FileName = $"cmd.exe",
-                            Arguments = $"/K tree projects\\{projectName}\\datasets /F /A > projects\\{projectName}\\datasets\\tree.txt & exit",
+                            Arguments = $"/K tree projects\\{projectName}\\datasets /F /A > projects\\{projectName}\\datasets\\tree.txt",
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
                             CreateNoWindow = true
