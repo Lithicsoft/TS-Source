@@ -50,7 +50,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
             }
             else
             {
-                label1.Content = "Prepare your datasets (if there is) before training model";
+                label1.Content = "Load your datasets (if there is) before training model";
             }
             button1.IsEnabled = true;
         }

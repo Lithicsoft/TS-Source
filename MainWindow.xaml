@@ -12,6 +12,6 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True">
     <Grid Loaded="MainWindows_Loaded" Margin="0,0,150,0">
-        <StackPanel x:Name="MainStackPanel" Margin="0,0,-150,0"/>
+        <ui:SimpleStackPanel x:Name="MainStackPanel" Margin="0,0,-150,0"/>
     </Grid>
 </Window>
