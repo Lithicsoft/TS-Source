@@ -81,17 +81,31 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
 
                     ProcessStartInfo start = new()
                     {
-                        FileName = $"cmd.exe",
-                        Arguments = $"/K conda activate \"{projectName}\" & python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\trainer.py")}\" & conda deactivate & pause & exit",
-                        UseShellExecute = true,
-                        RedirectStandardOutput = false
+                        FileName = "cmd.exe",
+                        Arguments = $"/C conda activate \"{projectName}\" && python \"{Path.Combine(Environment.CurrentDirectory, $"projects\\{projectName}\\trainer.py")}\" && conda deactivate && pause && exit",
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
                     };
 
-                    Process.Start(start);
+                    using (Process process = new())
+                    {
+                        process.StartInfo = start;
+                        process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+                        process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
+                        process.Start();
+                        process.BeginOutputReadLine();
+                        process.BeginErrorReadLine();
+                        process.WaitForExit();
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error training model: {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"Error training model: {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
             });
 
@@ -109,7 +123,7 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                 Type = NotificationType.Information
             });
 
-            TrainModel.Instance.isTraining = true;
+            TrainModel.Instance.isTraining = false;
             button1.IsEnabled = true;
         }
     }

@@ -90,7 +90,10 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error running model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"Error running model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
             });
 

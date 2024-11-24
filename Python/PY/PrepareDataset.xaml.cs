@@ -104,12 +104,18 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
                     }
                 }
                 else
                 {
-                    MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
             });
 

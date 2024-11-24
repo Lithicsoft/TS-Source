@@ -52,19 +52,20 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
 
             progressBar.Visibility = Visibility.Visible;
 
+            var sampleInput = new ModelInput
+            {
+                A = float.Parse(ValueA.Text),
+                B = float.Parse(ValueB.Text),
+                C = float.Parse(ValueC.Text),
+                D = float.Parse(ValueD.Text)
+            };
+
             await Task.Run(() =>
             {
                 try
                 {
                     InitModel();
-                    var sampleInput = new ModelInput
-                    {
-                        A = float.Parse(ValueA.Text),
-                        B = float.Parse(ValueB.Text),
-                        C = float.Parse(ValueC.Text),
-                        D = float.Parse(ValueD.Text)
-                    };
-
+                    
                     if (predictionEngine != null)
                     {
                         var prediction = predictionEngine.Predict(sampleInput);
@@ -72,7 +73,10 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
             });
 

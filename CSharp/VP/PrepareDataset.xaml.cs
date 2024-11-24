@@ -82,13 +82,19 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                 {
                     if (CheckCsvFormat(path))
                     {
-                        MessageBox.Show("The csv structure is invalid", "Dataset Structure", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show("The csv structure is invalid", "Dataset Structure", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
                         return;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error checking csv file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"Error checking csv file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                     return;
                 }
 
@@ -116,12 +122,18 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
                     }
                 }
                 else
                 {
-                    MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
             });
 

@@ -97,14 +97,20 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
 
                     if (!isValid)
                     {
-                        MessageBox.Show("The zip structure is invalid", "Dataset Structure", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show("The zip structure is invalid", "Dataset Structure", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
                         return;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error checking zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"Error checking zip file: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    });
                 }
 
                 if (File.Exists(path))
@@ -134,14 +140,20 @@ namespace Lithicsoft_Trainer_Studio.CSharp.IC
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Error loading dataset: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        });
                     }
                 }
                 else
                 {
-                    MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"File not found!", "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    });
                 }
             });
 

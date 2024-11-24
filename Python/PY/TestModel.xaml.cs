@@ -64,7 +64,10 @@ namespace Lithicsoft_Trainer_Studio.Python.PY
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"Error testing model: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
             });
 

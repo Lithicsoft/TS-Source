@@ -108,14 +108,20 @@ namespace Lithicsoft_Trainer_Studio.UserControls.Pages
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Error installing dependencies package: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            Environment.Exit(1);
+                            Dispatcher.Invoke(() =>
+                            {
+                                MessageBox.Show($"Error installing dependencies package: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                Environment.Exit(1);
+                            });
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error creating project: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"Error creating project: {ex.Message}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
             });
 

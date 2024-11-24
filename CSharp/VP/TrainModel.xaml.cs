@@ -83,7 +83,10 @@ namespace Lithicsoft_Trainer_Studio.CSharp.VP
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error training model {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show($"Error training model {ex}", "Exception Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
             });
 
