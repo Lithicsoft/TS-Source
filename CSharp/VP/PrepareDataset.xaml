@@ -16,7 +16,7 @@
 
         <!-- TextBox for displaying the chosen file path -->
         <TextBox x:Name="textBox1" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                 Width="530" TextWrapping="Wrap"
+                 Width="530" TextWrapping="NoWrap"
                  Margin="10,48,0,8" TextChanged="TextBox1_TextChanged"/>
 
         <!-- Button to choose the file -->
